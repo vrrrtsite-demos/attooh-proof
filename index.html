@@ -10,10 +10,10 @@
   Developed by Jakes Schoeman. All rights reserved.
   Unauthorised reproduction or reuse prohibited.
 -->
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #fff; font-family: 'Lato', sans-serif; overflow: hidden; height: 100vh; width: 100vw; }
+  body { background: #fff; font-family: 'Nunito', sans-serif; overflow: hidden; height: 100vh; width: 100vw; }
 
   #header {
     position: fixed; top: 0; left: 0; right: 0; z-index: 200;
@@ -25,7 +25,7 @@
     display: flex; align-items: center;
     font-size: 11px; font-weight: 800; color: #9cd31e;
     cursor: pointer; border-left: 1px solid #eee;
-    white-space: nowrap; font-family: 'Lato', sans-serif;
+    white-space: nowrap; font-family: 'Nunito', sans-serif;
     transition: background 0.15s;
   }
   #change-path:hover { background: rgba(156,211,30,0.07); }
@@ -55,7 +55,7 @@
 
   .nav-pill {
     flex-shrink: 0; cursor: pointer; white-space: nowrap;
-    font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 800;
+    font-family: 'Nunito', sans-serif; font-size: 10px; font-weight: 800;
     padding: 4px 12px; border-radius: 20px; border: 1.5px solid transparent;
     transition: all 0.18s ease; letter-spacing: 0.1px; user-select: none;
   }
@@ -65,11 +65,12 @@
   .nav-pill.path { font-size: 11px; font-weight: 800; padding: 4px 13px; background: #f7f7f7; color: #333; border-color: #ddd; }
   .nav-pill.path:hover:not(.active) { background: #eee; border-color: #bbb; }
   .nav-pill.path.active { color: #fff; border-color: transparent; box-shadow: 0 2px 10px rgba(0,0,0,0.20); }
-    .nav-pill.path[data-path="new-client-onboarding"].active { background: #9cd31e; }
-  .nav-pill.path[data-path="estate-planning-path"].active { background: #3a6000; }
-  .nav-pill.path[data-path="services-exploration"].active { background: #c8a000; }
-  .nav-pill.path[data-path="blog-to-services"].active { background: #5a8fd8; }
-  .nav-pill.path[data-path="our-story-to-services"].active { background: #e07040; }
+    .nav-pill.path[data-path="personal-protection-journey"].active { background: #9cd31e; }
+  .nav-pill.path[data-path="business-owner-protection"].active { background: #3a6000; }
+  .nav-pill.path[data-path="estate-planning-awareness"].active { background: #c8a000; }
+  .nav-pill.path[data-path="insurance-education-to-service"].active { background: #5a8fd8; }
+  .nav-pill.path[data-path="brand-to-advisory-engagement"].active { background: #e07040; }
+  .nav-pill.path[data-path="youth-finance-education"].active { background: #9060a8; }
 
   .nav-pill.a { background: rgba(156,211,30,0.10); color: #3a6000; border-color: rgba(156,211,30,0.45); }
   .nav-pill.a.active { background: #9cd31e; color: #1a3000; border-color: #9cd31e; box-shadow: 0 2px 10px rgba(156,211,30,0.40); }
@@ -83,7 +84,7 @@
 
   .nav-cta {
     flex-shrink: 0; cursor: pointer; white-space: nowrap;
-    font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 800;
+    font-family: 'Nunito', sans-serif; font-size: 10px; font-weight: 800;
     padding: 5px 14px; border-radius: 20px; letter-spacing: 0.1px; user-select: none;
     background: #9cd31e; color: #1a3000; border: none; transition: all 0.18s ease;
   }
@@ -103,13 +104,14 @@
   #bottom-scroll::-webkit-scrollbar { display: none; }
   #canvas-container { bottom: 44px; }
 
-  #canvas-container { position: fixed; top: 52px; left: 0; right: 0; bottom: 0; cursor: grab; }
+  #canvas-container { position: fixed; top: 88px; left: 0; right: 0; bottom: 0; cursor: grab; }
 
   .node-label {
-    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+    font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 800;
     padding: 3px 10px; border-radius: 20px;
     white-space: nowrap; transition: opacity 0.25s; letter-spacing: 0.1px;
     pointer-events: auto; cursor: pointer;
+    will-change: transform;
   }
   .node-label.hub-a   { color: #2a4e00; background: rgba(255,255,255,0.95); border: 1.5px solid rgba(156,211,30,0.70); box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
   .node-label.hub-b   { color: #1a3000; background: rgba(255,255,255,0.95); border: 1.5px solid rgba(58,96,0,0.55); box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
@@ -126,7 +128,7 @@
   #mini-tip.visible { display: block; animation: tipIn 0.18s ease; }
   @keyframes tipIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
   #mt-content { padding: 14px 16px; }
-  #mt-label  { font-size: 12px; font-weight: 800; color: #9cd31e; margin-bottom: 5px; font-family: 'Lato', sans-serif; }
+  #mt-label  { font-size: 12px; font-weight: 800; color: #9cd31e; margin-bottom: 5px; font-family: 'Nunito', sans-serif; }
   #mt-body   { font-size: 11px; color: rgba(255,255,255,0.82); line-height: 1.6; }
   #mt-action { font-size: 10px; color: #c8f040; margin-top: 8px; font-weight: 800; cursor: pointer; }
   #mt-close  { position: absolute; top: 8px; right: 10px; color: rgba(255,255,255,0.5); font-size: 16px; cursor: pointer; line-height: 1; z-index: 1; }
@@ -138,7 +140,7 @@
   .ctrl {
     background: rgba(255,255,255,0.92); border: 1px solid #e0e0e0; border-radius: 20px;
     padding: 5px 12px; display: flex; align-items: center; gap: 6px;
-    font-family: 'Lato', sans-serif; font-size: 10px; font-weight: 700;
+    font-family: 'Nunito', sans-serif; font-size: 10px; font-weight: 700;
     color: #555; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
   .ctrl-icon { font-size: 13px; line-height: 1; }
@@ -146,7 +148,6 @@
   .ctrl-dot-b { width: 10px; height: 10px; border-radius: 50%; background: #3a6000; display: inline-block; flex-shrink: 0; margin-left: -4px; }
 
   @media (max-width: 600px) {
-    #hemi-labels { display: none; }
     #controls { gap: 3px; bottom: 14px; }
     .ctrl { font-size: 9px; padding: 4px 7px; gap: 3px; }
     .ctrl-long { display: none; }
@@ -177,29 +178,22 @@
   #path-guide.visible { display: block; animation: tipIn 0.3s ease; }
   #pg-exit { position: absolute; top: 10px; right: 14px; font-size: 10px; color: rgba(255,255,255,0.35); cursor: pointer; font-weight: 700; }
   #pg-exit:hover { color: rgba(255,255,255,0.7); }
-  #pg-label { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--path-color, #9cd31e); margin-bottom: 6px; font-family: 'Lato', sans-serif; }
-  #pg-step  { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 10px; font-family: 'Lato', sans-serif; line-height: 1.3; }
+  #pg-label { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--path-color, #9cd31e); margin-bottom: 6px; font-family: 'Nunito', sans-serif; }
+  #pg-step  { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 10px; font-family: 'Nunito', sans-serif; line-height: 1.3; }
   #pg-dots  { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; }
   .pg-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.20); transition: all 0.2s; }
   .pg-dot.done   { background: var(--path-color, #9cd31e); opacity: 0.6; }
   .pg-dot.active { background: var(--path-color, #9cd31e); transform: scale(1.35); }
   #pg-nav { display: flex; gap: 10px; justify-content: center; }
-  #pg-nav button { font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 800; padding: 7px 18px; border-radius: 20px; border: none; cursor: pointer; transition: all 0.15s; }
+  #pg-nav button { font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 800; padding: 7px 18px; border-radius: 20px; border: none; cursor: pointer; transition: all 0.15s; }
   #pg-back { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.6); }
   #pg-back:hover { background: rgba(255,255,255,0.18); color: #fff; }
   #pg-next { background: var(--path-color, #9cd31e); color: #1a3000; box-shadow: 0 2px 10px rgba(0,0,0,0.25); }
   #pg-next:hover { opacity: 0.88; }
 
-  #hemi-labels {
-    position: fixed; left: 18px; top: 50%; transform: translateY(-50%);
-    display: flex; flex-direction: column; gap: 8px; z-index: 100; pointer-events: none;
-  }
-  .hemi-tag { font-family: 'Lato', sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; }
-  .hemi-tag.a { background: rgba(156,211,30,0.12); color: #3a6000; border: 1px solid rgba(156,211,30,0.35); }
-  .hemi-tag.b { background: rgba(58,96,0,0.10); color: #3a6000; border: 1px solid rgba(58,96,0,0.25); }
 
   #content-panel {
-    position: fixed; top: 52px; right: 0; bottom: 44px;
+    position: fixed; top: 88px; right: 0; bottom: 44px;
     width: 380px; z-index: 300;
     background: rgba(255,255,255,0.97);
     border-left: 1px solid #eee;
@@ -225,17 +219,19 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
   #cpb-info { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 1px; }
-  #cpb-label { font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--pb-color, #9cd31e); font-family: 'Lato', sans-serif; }
-  #cpb-step  { font-size: 12px; font-weight: 800; color: #222; font-family: 'Lato', sans-serif; }
+  #cpb-label { font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--pb-color, #9cd31e); font-family: 'Nunito', sans-serif; }
+  #cpb-step  { font-size: 12px; font-weight: 800; color: #222; font-family: 'Nunito', sans-serif; }
   #cpb-back, #cpb-next {
-    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+    font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 800;
     padding: 5px 14px; border-radius: 20px; border: none; cursor: pointer;
     transition: all 0.15s; white-space: nowrap; flex-shrink: 0;
   }
   #cpb-back { background: #f0f0f0; color: #666; }
   #cpb-back:hover { background: #e0e0e0; }
-  #cpb-next { background: var(--pb-color, #9cd31e); color: #1a3000; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+  #cpb-next { background: var(--pb-color, #9cd31e); color: var(--pb-text, #1a3000); box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
   #cpb-next:hover { opacity: 0.88; }
+  #cpb-cta { background: #9cd31e; color: #1a3000; font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 800; padding: 5px 13px; border-radius: 20px; border: none; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all 0.15s; }
+  #cpb-cta:hover { background: #7aaa10; }
   #cpb-close { background: none; border: none; cursor: pointer; font-size: 18px; color: #aaa; line-height: 1; padding: 4px 6px; flex-shrink: 0; transition: color 0.15s; }
   #cpb-close:hover { color: #555; }
 
@@ -254,31 +250,31 @@
     letter-spacing: 1px; text-transform: uppercase;
     padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
     background: rgba(156,211,30,0.14); color: #3a6000;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Nunito', sans-serif;
   }
-  #cp-title { font-size: 18px; font-weight: 900; color: #1a1a2e; margin-bottom: 8px; line-height: 1.25; font-family: 'Lato', sans-serif; }
-  #cp-intro { font-size: 13px; color: #666; line-height: 1.65; margin-bottom: 20px; font-family: 'Lato', sans-serif; border-left: 3px solid #9cd31e; padding-left: 12px; }
+  #cp-title { font-size: 18px; font-weight: 900; color: #1a1a2e; margin-bottom: 8px; line-height: 1.25; font-family: 'Nunito', sans-serif; }
+  #cp-intro { font-size: 13px; color: #666; line-height: 1.65; margin-bottom: 20px; font-family: 'Nunito', sans-serif; border-left: 3px solid #9cd31e; padding-left: 12px; }
 
   .cp-card { background: #f9f9f9; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; position: relative; border: 1px solid #f0f0f0; transition: box-shadow 0.15s; }
   .cp-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
   .cp-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
   .cp-card-icon { font-size: 18px; }
-  .cp-card-title { font-size: 13px; font-weight: 800; color: #1a1a2e; font-family: 'Lato', sans-serif; }
-  .cp-card-body  { font-size: 12px; color: #555; line-height: 1.65; font-family: 'Lato', sans-serif; margin-bottom: 8px; }
+  .cp-card-title { font-size: 13px; font-weight: 800; color: #1a1a2e; font-family: 'Nunito', sans-serif; }
+  .cp-card-body  { font-size: 12px; color: #555; line-height: 1.65; font-family: 'Nunito', sans-serif; margin-bottom: 8px; }
 
   .cp-articles { margin-top: 10px; }
-  .cp-articles-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; font-family: 'Lato', sans-serif; }
+  .cp-articles-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; font-family: 'Nunito', sans-serif; }
   .cp-article-list { list-style: none; padding: 0; margin: 0; }
   .cp-article-item { display: flex; align-items: baseline; gap: 6px; padding: 4px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
   .cp-article-item:hover .cp-article-title { color: #3a6000; }
   .cp-article-dot { color: #9cd31e; font-size: 14px; flex-shrink: 0; }
-  .cp-article-title { font-size: 12px; color: #444; font-family: 'Lato', sans-serif; line-height: 1.4; }
+  .cp-article-title { font-size: 12px; color: #444; font-family: 'Nunito', sans-serif; line-height: 1.4; }
 
   /* Book a meeting CTA inside panel */
   .cp-cta-btn {
     display: inline-block; margin-top: 8px;
     background: #9cd31e; color: #1a3000;
-    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+    font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 800;
     padding: 6px 16px; border-radius: 20px; cursor: pointer; border: none;
     transition: all 0.15s;
   }
@@ -290,7 +286,7 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 16px; background: #fafafa;
   }
-  #cp-admin-label { font-size: 11px; color: #aaa; font-family: 'Lato', sans-serif; font-weight: 700; }
+  #cp-admin-label { font-size: 11px; color: #aaa; font-family: 'Nunito', sans-serif; font-weight: 700; }
   .cp-toggle-wrap { position: relative; display: inline-block; width: 36px; height: 20px; }
   .cp-toggle-wrap input { opacity: 0; width: 0; height: 0; }
   .cp-toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #ddd; border-radius: 20px; transition: 0.2s; }
@@ -315,28 +311,53 @@
     body.path-active:not(.panel-open) #content-panel { bottom: 96px; }
   }
 
-/* ── HEATMAP ──────────────────────────────────────────────────────── */
-body.heatmap-mode .node-label.hub-a,
-body.heatmap-mode .node-label.hub-b { transition: background 0.8s ease, border-color 0.8s ease; }
-.heatmap-hot   { background: rgba(231,76,60,0.92)  !important; border-color: #c0392b !important; color: #fff !important; }
-.heatmap-warm  { background: rgba(230,126,34,0.88) !important; border-color: #e67e22 !important; color: #fff !important; }
-.heatmap-mild  { background: rgba(241,196,15,0.85) !important; border-color: #f39c12 !important; color: #333 !important; }
-.heatmap-cool  { background: rgba(52,152,219,0.80) !important; border-color: #2980b9 !important; color: #fff !important; }
-.heatmap-cold  { background: rgba(200,200,200,0.50) !important; border-color: #ccc     !important; color: #666 !important; }
+  /* ── Mode selector bar ── */
+  #mode-bar {
+    position: fixed; top: 52px; left: 0; right: 0; z-index: 190;
+    height: 36px; background: #fff; border-bottom: 1px solid #e8e8e0;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  .mode-btn {
+    font-family: 'Nunito', sans-serif; font-size: 10px; font-weight: 800;
+    padding: 4px 14px; border-radius: 20px; border: 1.5px solid #e0e0e0;
+    background: transparent; color: #888; cursor: pointer; letter-spacing: 0.1px;
+    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease; user-select: none;
+  }
+  .mode-btn:hover { background: #f5f5f5; color: #444; }
+  .mode-btn.active { background: rgba(156,211,30,0.12); color: #3a6000; border-color: rgba(156,211,30,0.55); }
+
+  /* Child labels hidden in Navigate and Guide Me modes */
+  body.mode-navigate .node-label.child-a,
+  body.mode-navigate .node-label.child-b,
+  body.mode-guide .node-label.child-a,
+  body.mode-guide .node-label.child-b { display: none; }
+
+  /* Entry-point hub glow in Guide Me mode */
+  @keyframes guidePulse {
+    0%, 100% { box-shadow: 0 0 0 2px rgba(248,158,52,0.5), 0 4px 16px rgba(248,158,52,0.25); border-color: rgba(248,158,52,0.8); }
+    50%       { box-shadow: 0 0 0 5px rgba(248,158,52,0.25), 0 6px 24px rgba(248,158,52,0.40); border-color: rgba(248,158,52,1.0); }
+  }
+  .node-label.guide-entry {
+    animation: guidePulse 1.8s ease-in-out infinite;
+    color: #7A4A00 !important;
+  }
+
+  /* Hide mode bar on mobile — mobile is always Navigate */
+  @media (max-width: 600px) { #mode-bar { display: none; } }
 </style>
 </head>
 <body>
 
 <div id="header">
-  <div id="logo-pin">
-    <span style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:#3a6000;letter-spacing:0.5px;">attooh.co.za</span>
-  </div>
+  <div id="logo-pin"><span style="font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;color:#3a6000;letter-spacing:-0.3px;">attooh.co.za</span></div>
   <div id="nav-wrap"><div id="nav-bar"></div></div>
   <div id="change-path" title="Choose a different guide">← My Guide</div>
 </div>
 
-<div id="hemi-labels">
-  
+<div id="mode-bar" role="group" aria-label="View mode">
+  <button class="mode-btn" data-mode="explore" type="button" aria-pressed="false">Explore</button>
+  <button class="mode-btn active" data-mode="navigate" type="button" aria-pressed="true">Navigate</button>
+  <button class="mode-btn" data-mode="guide" type="button" aria-pressed="false">Guide Me</button>
 </div>
 
 <div id="canvas-container"></div>
@@ -359,6 +380,7 @@ body.heatmap-mode .node-label.hub-b { transition: background 0.8s ease, border-c
       <span id="cpb-label"></span>
       <span id="cpb-step"></span>
     </div>
+    <button id="cpb-cta">☕ Book</button>
     <button id="cpb-next">Next →</button>
   </div>
   <div id="cp-inner">
@@ -369,7 +391,6 @@ body.heatmap-mode .node-label.hub-b { transition: background 0.8s ease, border-c
   </div>
   <div id="cp-admin-bar">
     <span id="cp-admin-label">Admin mode</span>
-    <button id="cp-heatmap-btn" style="display:none;font-family:sans-serif;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer;">🔥 Heatmap</button>
     <label class="cp-toggle-wrap">
       <input type="checkbox" id="cp-admin-toggle">
       <span class="cp-toggle-slider"></span>
@@ -397,15 +418,6 @@ body.heatmap-mode .node-label.hub-b { transition: background 0.8s ease, border-c
   </div>
 </div>
 
-<!-- Email capture card — shown 2s after path completion -->
-<div id="email-capture" style="display:none;position:fixed;bottom:54px;left:50%;transform:translateX(-50%);z-index:500;background:#1a1a2e;border-radius:18px;padding:20px 24px;width:320px;box-shadow:0 8px 32px rgba(0,0,0,0.40);border:1.5px solid rgba(58,96,0,0.20);text-align:center;">
-  <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;">Want a personalised guide?</div>
-  <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:14px;">Based on what you just explored — free, no spam.</div>
-  <input id="email-input" type="email" placeholder="your@email.com" style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid #444;background:#fff;font-size:12px;margin-bottom:8px;box-sizing:border-box;">
-  <button id="email-submit" style="width:100%;padding:8px;border-radius:20px;background:#3a6000;color:#fff;border:none;font-weight:700;font-size:12px;cursor:pointer;">Send me the guide →</button>
-  <div id="email-dismiss" style="margin-top:8px;font-size:10px;color:rgba(255,255,255,0.35);cursor:pointer;">No thanks</div>
-</div>
-
 <script type="importmap">
 {
   "imports": {
@@ -425,27 +437,32 @@ const strandA = [
     "id": "home-overview",
     "label": "Home Brand Overview",
     "strand": "A",
-    "tip": "The main entry point introducing attooh!",
+    "tip": "The homepage presents attooh!s brand ide",
     "children": [
       {
         "id": "our-approach",
         "label": "Our Approach",
-        "tip": "Describes attooh!s commitment to making "
+        "tip": "Explains attooh!s motto of making ordina"
       },
       {
         "id": "our-values",
         "label": "Our Values",
-        "tip": "Outlines attooh!s ethical, value-driven "
+        "tip": "Describes the ethical, value-driven appr"
       },
       {
-        "id": "our-process",
+        "id": "butterfly-effect",
+        "label": "The Butterfly Effect of Finance",
+        "tip": "A brand metaphor linking personal financ"
+      },
+      {
+        "id": "client-process",
         "label": "Our Process",
-        "tip": "Three-step client journey: share details"
+        "tip": "A three-step onboarding process: share d"
       },
       {
         "id": "management-team",
-        "label": "Management Team",
-        "tip": "Profiles of the leadership team includin"
+        "label": "The Management Team",
+        "tip": "Profiles of key leadership including CEO"
       },
       {
         "id": "financial-plan-faq",
@@ -458,37 +475,37 @@ const strandA = [
     "id": "our-story",
     "label": "attooh! Our Story",
     "strand": "A",
-    "tip": "The origin story, mission, and core focu",
+    "tip": "Tells the founding story, core focus, an",
     "children": [
       {
-        "id": "brand-origin",
-        "label": "Brand Origin",
-        "tip": "Recounts how the name attooh! came from "
+        "id": "founding-story",
+        "label": "It Is All in Our Name",
+        "tip": "Recounts how CEO Wouter Snymans childhoo"
       },
       {
-        "id": "abundance-mindset",
-        "label": "Abundance Mindset",
-        "tip": "Explains attooh!s philosophy of reframin"
+        "id": "abundance-mindset-story",
+        "label": "attooh! Is Celebration",
+        "tip": "Positions attooh! as a firm that reframe"
       },
       {
         "id": "core-focus",
-        "label": "Core Focus",
-        "tip": "Describes attooh!s dedication to serving"
+        "label": "Core Focus: Celebrate Your Dreams",
+        "tip": "Describes the firms commitment to person"
       },
       {
-        "id": "personal-finance-overview",
-        "label": "Personal Finance Overview",
-        "tip": "Introduces personal finance as the art o"
+        "id": "personal-finance-why",
+        "label": "Why Personal Finance?",
+        "tip": "Explains personal finance as the art of "
       },
       {
-        "id": "business-insurance-overview",
-        "label": "Business Insurance Overview",
-        "tip": "Explains why business insurance is criti"
+        "id": "business-insurance-why",
+        "label": "Why Business Insurance?",
+        "tip": "Covers the unique risks businesses face "
       },
       {
-        "id": "employee-benefits-overview",
-        "label": "Employee Benefits Overview",
-        "tip": "Outlines the importance of competitive e"
+        "id": "employee-benefits-why",
+        "label": "Why Employee Benefits?",
+        "tip": "Highlights the role of comprehensive emp"
       }
     ]
   },
@@ -496,51 +513,51 @@ const strandA = [
     "id": "personal-insurance",
     "label": "Personal Family Insurance",
     "strand": "A",
-    "tip": "Individual and family insurance products",
+    "tip": "Insurance products protecting individual",
     "children": [
       {
-        "id": "individual-family-insurance",
-        "label": "Individual Family Insurance",
-        "tip": "Flexible life cover with customisable di"
+        "id": "life-insurance",
+        "label": "Individual / Family Insurance",
+        "tip": "Flexible life cover with customisable be"
       },
       {
         "id": "short-term-insurance",
         "label": "Short-Term Insurance",
-        "tip": "Comprehensive, flexible, and affordable "
+        "tip": "Comprehensive, affordable insurance tail"
       },
       {
-        "id": "dread-disease",
-        "label": "Dread Disease Cover",
-        "tip": "Protection against major illnesses such "
-      },
-      {
-        "id": "disability-cover",
-        "label": "Disability Cover",
-        "tip": "Capital lump sum paid out upon permanent"
-      },
-      {
-        "id": "income-protection",
-        "label": "Income Protection",
-        "tip": "Replaces a portion of earnings if unable"
+        "id": "health-cover",
+        "label": "Health",
+        "tip": "Monthly premium medical cover guided by "
       },
       {
         "id": "gap-cover",
         "label": "Gap Cover",
         "tip": "Short-term policy covering the shortfall"
+      },
+      {
+        "id": "dread-disease",
+        "label": "Dread Disease",
+        "tip": "Protection against critical illnesses su"
+      },
+      {
+        "id": "disability-cover",
+        "label": "Disability Cover",
+        "tip": "Capital payout cover providing financial"
+      },
+      {
+        "id": "income-protection",
+        "label": "Income Protection",
+        "tip": "Replaces a portion of earnings if the cl"
       }
     ]
   },
   {
-    "id": "health-wealth",
-    "label": "Health Wealth Solutions",
+    "id": "investments-retirement",
+    "label": "Investments Retirement Planning",
     "strand": "A",
-    "tip": "Integrated health and wealth products in",
+    "tip": "Strategies and products for growing, pro",
     "children": [
-      {
-        "id": "health-cover",
-        "label": "Health Cover",
-        "tip": "Monthly premium medical cover ensuring c"
-      },
       {
         "id": "investments",
         "label": "Investments",
@@ -549,7 +566,7 @@ const strandA = [
       {
         "id": "long-term-savings-offshore",
         "label": "Long-Term Savings Offshore Investments",
-        "tip": "Diversified investment allocation across"
+        "tip": "Diversification across local and interna"
       },
       {
         "id": "retirement-planning",
@@ -558,8 +575,41 @@ const strandA = [
       },
       {
         "id": "global-education",
-        "label": "Global Education Savings",
-        "tip": "Financial safeguard ensuring a childs ed"
+        "label": "Global Education",
+        "tip": "Safeguards a childs educational funding "
+      }
+    ]
+  },
+  {
+    "id": "wills-estates",
+    "label": "Wills Estate Planning",
+    "strand": "A",
+    "tip": "Complimentary will drafting, estate admi",
+    "children": [
+      {
+        "id": "complimentary-will",
+        "label": "Complimentary Will Drafting",
+        "tip": "Free professional drafting, updating, an"
+      },
+      {
+        "id": "estate-administration",
+        "label": "Estate Administration",
+        "tip": "Full in-house estate winding-up service "
+      },
+      {
+        "id": "cost-of-dying",
+        "label": "Cost of Dying Planning",
+        "tip": "Consultation and calculation covering ex"
+      },
+      {
+        "id": "five-consequences",
+        "label": "5 Consequences of No Will",
+        "tip": "Educational content outlining legal, fam"
+      },
+      {
+        "id": "testamentary-trusts",
+        "label": "Testamentary Trusts",
+        "tip": "Creation of trusts for minor children, w"
       }
     ]
   }
@@ -570,7 +620,7 @@ const strandB = [
     "id": "business-assurance",
     "label": "Business Assurance",
     "strand": "B",
-    "tip": "Insurance and risk solutions designed to",
+    "tip": "Insurance and assurance solutions protec",
     "children": [
       {
         "id": "buy-sell-agreements",
@@ -580,7 +630,7 @@ const strandB = [
       {
         "id": "keyman-insurance",
         "label": "Keyman Insurance",
-        "tip": "Compensates for financial losses from th"
+        "tip": "Compensates for financial losses caused "
       },
       {
         "id": "contingent-liability",
@@ -590,17 +640,17 @@ const strandB = [
       {
         "id": "business-risk-insurance",
         "label": "Business Risk Insurance",
-        "tip": "Broad coverage against business-specific"
+        "tip": "Broader risk coverage protecting busines"
       },
       {
         "id": "cyber-liability",
         "label": "Cyber Liability Insurance",
-        "tip": "Covers financial losses arising from cyb"
+        "tip": "Coverage against financial losses arisin"
       },
       {
         "id": "property-insurance",
         "label": "Property Insurance",
-        "tip": "Protects business property assets agains"
+        "tip": "Protection for physical business propert"
       }
     ]
   },
@@ -608,78 +658,35 @@ const strandB = [
     "id": "employee-benefits",
     "label": "Employee Benefits",
     "strand": "B",
-    "tip": "Corporate benefit solutions helping busi",
+    "tip": "Corporate benefit packages helping busin",
     "children": [
       {
-        "id": "corporate-benefits-consulting",
-        "label": "Corporate Benefits Consulting",
-        "tip": "attooh! assists companies in designing b"
+        "id": "benefits-package",
+        "label": "Tailored Benefits Package",
+        "tip": "Customised employee benefit solutions al"
       },
       {
-        "id": "financial-wellness-employees",
-        "label": "Financial Wellness for Employees",
-        "tip": "Education and support programmes helping"
+        "id": "health-wealth-integration",
+        "label": "Health Wealth Integration",
+        "tip": "Corporate philosophy integrating employe"
       },
       {
-        "id": "comparative-benefits-quote",
-        "label": "Comparative Benefits Quote",
-        "tip": "Non-obligatory quote service to help emp"
+        "id": "comparative-quote",
+        "label": "Comparative Quote",
+        "tip": "Non-obligatory quote service for busines"
       }
     ]
   },
   {
-    "id": "wills-estates",
-    "label": "Wills Estate Planning",
-    "strand": "B",
-    "tip": "Complimentary will drafting, estate admi",
-    "children": [
-      {
-        "id": "complimentary-will",
-        "label": "Complimentary Will",
-        "tip": "Free professionally drafted, collected, "
-      },
-      {
-        "id": "estate-administration",
-        "label": "Estate Administration",
-        "tip": "Full in-house estate administration serv"
-      },
-      {
-        "id": "cost-of-dying-planning",
-        "label": "Cost of Dying Planning",
-        "tip": "Consultation and calculation of executor"
-      },
-      {
-        "id": "legacy-protection-plan",
-        "label": "Legacy Protection Plan",
-        "tip": "Insurance-backed solution underwritten b"
-      },
-      {
-        "id": "testamentary-trusts",
-        "label": "Testamentary Trusts",
-        "tip": "Creation of trusts for minor children, w"
-      },
-      {
-        "id": "five-consequences-no-will",
-        "label": "5 Consequences of No Will",
-        "tip": "Educational content outlining the legal "
-      }
-    ]
-  },
-  {
-    "id": "fiduciary-services",
+    "id": "fiduciary",
     "label": "Fiduciary Services",
     "strand": "B",
-    "tip": "Legal and estate planning services ensur",
+    "tip": "Legal and fiduciary services ensuring pr",
     "children": [
       {
-        "id": "will-drafting",
-        "label": "Will Drafting",
-        "tip": "Legally prepared will documents ensuring"
-      },
-      {
-        "id": "estate-planning-advice",
-        "label": "Estate Planning Advice",
-        "tip": "Guidance on structuring an estate to min"
+        "id": "fiduciary-overview",
+        "label": "Fiduciary Overview",
+        "tip": "Start-with-the-end-in-mind approach to w"
       }
     ]
   },
@@ -687,18 +694,18 @@ const strandB = [
     "id": "blog-insights",
     "label": "Blog Financial Insights",
     "strand": "B",
-    "tip": "Educational articles covering financial ",
+    "tip": "Educational articles on financial mindse",
     "children": [
       {
         "id": "money-mindset-matters",
         "label": "Your Money Mindset Matters!",
-        "tip": "Explores the millionaire mindset, abunda",
+        "tip": "Explores the millionaire mindset concept",
         "url": "https://attooh.co.za/blog/b/money-mindset-matters"
       },
       {
         "id": "secure-your-legacy",
         "label": "Protect Your Legacy: Secure Your Familys",
-        "tip": "Details the immediate and long-term fina",
+        "tip": "Details the full spectrum of estate cost",
         "url": "https://attooh.co.za/blog/b/secure-your-legacy"
       },
       {
@@ -708,21 +715,21 @@ const strandB = [
         "url": "https://attooh.co.za/blog/b/financial-management-recipe-for-success"
       },
       {
-        "id": "why-disability-cover",
+        "id": "disability-cover-article",
         "label": "Why Consider Disability Cover?",
-        "tip": "Compares capital disability cover and in",
+        "tip": "Compares capital disability and income p",
         "url": "https://attooh.co.za/blog/b/why-consider-disability-insurance"
       },
       {
-        "id": "worth-of-financial-advisors",
+        "id": "financial-advisors-worth",
         "label": "The Underrated Worth of Financial Adviso",
-        "tip": "Outlines five ways financial advisors ad",
+        "tip": "Outlines five dimensions of advisor valu",
         "url": "https://attooh.co.za/blog/b/the-underrated-worth-of-financial-advisors"
       },
       {
         "id": "children-and-finance",
         "label": "Children and Finance",
-        "tip": "A staged guide to introducing money mana",
+        "tip": "A developmental guide for teaching child",
         "url": "https://attooh.co.za/blog/b/children-and-finance"
       },
       {
@@ -732,10 +739,53 @@ const strandB = [
         "url": "https://attooh.co.za/blog/b/teens-and-budgeting"
       }
     ]
+  },
+  {
+    "id": "compliance-legal",
+    "label": "Compliance Legal Documents",
+    "strand": "B",
+    "tip": "Regulatory and legal documentation inclu",
+    "children": [
+      {
+        "id": "privacy-policy",
+        "label": "Privacy Policy",
+        "tip": "Legal document governing how attooh! col"
+      },
+      {
+        "id": "popia-policy",
+        "label": "POPIA Policy",
+        "tip": "Policy document outlining compliance wit"
+      },
+      {
+        "id": "rmcp",
+        "label": "RMCP",
+        "tip": "Risk Management and Compliance Programme"
+      },
+      {
+        "id": "paia",
+        "label": "PAIA",
+        "tip": "Promotion of Access to Information Act m"
+      },
+      {
+        "id": "request-for-records",
+        "label": "Request for Records",
+        "tip": "Form or process for submitting a formal "
+      },
+      {
+        "id": "internal-appeal",
+        "label": "Internal Appeal",
+        "tip": "Process document for lodging an internal"
+      },
+      {
+        "id": "fees-payable",
+        "label": "Fees Payable",
+        "tip": "Schedule of fees applicable to PAIA reco"
+      }
+    ]
   }
 ];
 
-const rungHubs = [[0,0],[1,1],[2,2],[3,3]];
+const rungHubs = [[0,0],[1,1],[2,2],[3,3],[4,4]];
 
 const hubById = Object.fromEntries([...strandA, ...strandB].map(h => [h.id, h]));
 
@@ -750,28 +800,35 @@ const ILSA_CONTENT = {
         "id": "our-approach",
         "icon": "●",
         "title": "Our Approach",
-        "body": "Describes attooh!s commitment to making ",
+        "body": "Explains attooh!s motto of making ordina",
         "articles": []
       },
       {
         "id": "our-values",
         "icon": "●",
         "title": "Our Values",
-        "body": "Outlines attooh!s ethical, value-driven ",
+        "body": "Describes the ethical, value-driven appr",
         "articles": []
       },
       {
-        "id": "our-process",
+        "id": "butterfly-effect",
+        "icon": "●",
+        "title": "The Butterfly Effect of Finance",
+        "body": "A brand metaphor linking personal financ",
+        "articles": []
+      },
+      {
+        "id": "client-process",
         "icon": "●",
         "title": "Our Process",
-        "body": "Three-step client journey: share details",
+        "body": "A three-step onboarding process: share d",
         "articles": []
       },
       {
         "id": "management-team",
         "icon": "●",
-        "title": "Management Team",
-        "body": "Profiles of the leadership team includin",
+        "title": "The Management Team",
+        "body": "Profiles of key leadership including CEO",
         "articles": []
       },
       {
@@ -788,45 +845,45 @@ const ILSA_CONTENT = {
     "color": "#9cd31e",
     "items": [
       {
-        "id": "brand-origin",
+        "id": "founding-story",
         "icon": "●",
-        "title": "Brand Origin",
-        "body": "Recounts how the name attooh! came from ",
+        "title": "It Is All in Our Name",
+        "body": "Recounts how CEO Wouter Snymans childhoo",
         "articles": []
       },
       {
-        "id": "abundance-mindset",
+        "id": "abundance-mindset-story",
         "icon": "●",
-        "title": "Abundance Mindset",
-        "body": "Explains attooh!s philosophy of reframin",
+        "title": "attooh! Is Celebration",
+        "body": "Positions attooh! as a firm that reframe",
         "articles": []
       },
       {
         "id": "core-focus",
         "icon": "●",
-        "title": "Core Focus",
-        "body": "Describes attooh!s dedication to serving",
+        "title": "Core Focus: Celebrate Your Dreams",
+        "body": "Describes the firms commitment to person",
         "articles": []
       },
       {
-        "id": "personal-finance-overview",
+        "id": "personal-finance-why",
         "icon": "●",
-        "title": "Personal Finance Overview",
-        "body": "Introduces personal finance as the art o",
+        "title": "Why Personal Finance?",
+        "body": "Explains personal finance as the art of ",
         "articles": []
       },
       {
-        "id": "business-insurance-overview",
+        "id": "business-insurance-why",
         "icon": "●",
-        "title": "Business Insurance Overview",
-        "body": "Explains why business insurance is criti",
+        "title": "Why Business Insurance?",
+        "body": "Covers the unique risks businesses face ",
         "articles": []
       },
       {
-        "id": "employee-benefits-overview",
+        "id": "employee-benefits-why",
         "icon": "●",
-        "title": "Employee Benefits Overview",
-        "body": "Outlines the importance of competitive e",
+        "title": "Why Employee Benefits?",
+        "body": "Highlights the role of comprehensive emp",
         "articles": []
       }
     ]
@@ -836,38 +893,24 @@ const ILSA_CONTENT = {
     "color": "#9cd31e",
     "items": [
       {
-        "id": "individual-family-insurance",
+        "id": "life-insurance",
         "icon": "●",
-        "title": "Individual Family Insurance",
-        "body": "Flexible life cover with customisable di",
+        "title": "Individual / Family Insurance",
+        "body": "Flexible life cover with customisable be",
         "articles": []
       },
       {
         "id": "short-term-insurance",
         "icon": "●",
         "title": "Short-Term Insurance",
-        "body": "Comprehensive, flexible, and affordable ",
+        "body": "Comprehensive, affordable insurance tail",
         "articles": []
       },
       {
-        "id": "dread-disease",
+        "id": "health-cover",
         "icon": "●",
-        "title": "Dread Disease Cover",
-        "body": "Protection against major illnesses such ",
-        "articles": []
-      },
-      {
-        "id": "disability-cover",
-        "icon": "●",
-        "title": "Disability Cover",
-        "body": "Capital lump sum paid out upon permanent",
-        "articles": []
-      },
-      {
-        "id": "income-protection",
-        "icon": "●",
-        "title": "Income Protection",
-        "body": "Replaces a portion of earnings if unable",
+        "title": "Health",
+        "body": "Monthly premium medical cover guided by ",
         "articles": []
       },
       {
@@ -876,20 +919,34 @@ const ILSA_CONTENT = {
         "title": "Gap Cover",
         "body": "Short-term policy covering the shortfall",
         "articles": []
+      },
+      {
+        "id": "dread-disease",
+        "icon": "●",
+        "title": "Dread Disease",
+        "body": "Protection against critical illnesses su",
+        "articles": []
+      },
+      {
+        "id": "disability-cover",
+        "icon": "●",
+        "title": "Disability Cover",
+        "body": "Capital payout cover providing financial",
+        "articles": []
+      },
+      {
+        "id": "income-protection",
+        "icon": "●",
+        "title": "Income Protection",
+        "body": "Replaces a portion of earnings if the cl",
+        "articles": []
       }
     ]
   },
-  "health-wealth": {
-    "title": "Health Wealth Solutions",
+  "investments-retirement": {
+    "title": "Investments Retirement Planning",
     "color": "#9cd31e",
     "items": [
-      {
-        "id": "health-cover",
-        "icon": "●",
-        "title": "Health Cover",
-        "body": "Monthly premium medical cover ensuring c",
-        "articles": []
-      },
       {
         "id": "investments",
         "icon": "●",
@@ -901,7 +958,7 @@ const ILSA_CONTENT = {
         "id": "long-term-savings-offshore",
         "icon": "●",
         "title": "Long-Term Savings Offshore Investments",
-        "body": "Diversified investment allocation across",
+        "body": "Diversification across local and interna",
         "articles": []
       },
       {
@@ -914,8 +971,49 @@ const ILSA_CONTENT = {
       {
         "id": "global-education",
         "icon": "●",
-        "title": "Global Education Savings",
-        "body": "Financial safeguard ensuring a childs ed",
+        "title": "Global Education",
+        "body": "Safeguards a childs educational funding ",
+        "articles": []
+      }
+    ]
+  },
+  "wills-estates": {
+    "title": "Wills Estate Planning",
+    "color": "#9cd31e",
+    "items": [
+      {
+        "id": "complimentary-will",
+        "icon": "●",
+        "title": "Complimentary Will Drafting",
+        "body": "Free professional drafting, updating, an",
+        "articles": []
+      },
+      {
+        "id": "estate-administration",
+        "icon": "●",
+        "title": "Estate Administration",
+        "body": "Full in-house estate winding-up service ",
+        "articles": []
+      },
+      {
+        "id": "cost-of-dying",
+        "icon": "●",
+        "title": "Cost of Dying Planning",
+        "body": "Consultation and calculation covering ex",
+        "articles": []
+      },
+      {
+        "id": "five-consequences",
+        "icon": "●",
+        "title": "5 Consequences of No Will",
+        "body": "Educational content outlining legal, fam",
+        "articles": []
+      },
+      {
+        "id": "testamentary-trusts",
+        "icon": "●",
+        "title": "Testamentary Trusts",
+        "body": "Creation of trusts for minor children, w",
         "articles": []
       }
     ]
@@ -935,7 +1033,7 @@ const ILSA_CONTENT = {
         "id": "keyman-insurance",
         "icon": "●",
         "title": "Keyman Insurance",
-        "body": "Compensates for financial losses from th",
+        "body": "Compensates for financial losses caused ",
         "articles": []
       },
       {
@@ -949,21 +1047,21 @@ const ILSA_CONTENT = {
         "id": "business-risk-insurance",
         "icon": "●",
         "title": "Business Risk Insurance",
-        "body": "Broad coverage against business-specific",
+        "body": "Broader risk coverage protecting busines",
         "articles": []
       },
       {
         "id": "cyber-liability",
         "icon": "●",
         "title": "Cyber Liability Insurance",
-        "body": "Covers financial losses arising from cyb",
+        "body": "Coverage against financial losses arisin",
         "articles": []
       },
       {
         "id": "property-insurance",
         "icon": "●",
         "title": "Property Insurance",
-        "body": "Protects business property assets agains",
+        "body": "Protection for physical business propert",
         "articles": []
       }
     ]
@@ -973,92 +1071,37 @@ const ILSA_CONTENT = {
     "color": "#3a6000",
     "items": [
       {
-        "id": "corporate-benefits-consulting",
+        "id": "benefits-package",
         "icon": "●",
-        "title": "Corporate Benefits Consulting",
-        "body": "attooh! assists companies in designing b",
+        "title": "Tailored Benefits Package",
+        "body": "Customised employee benefit solutions al",
         "articles": []
       },
       {
-        "id": "financial-wellness-employees",
+        "id": "health-wealth-integration",
         "icon": "●",
-        "title": "Financial Wellness for Employees",
-        "body": "Education and support programmes helping",
+        "title": "Health Wealth Integration",
+        "body": "Corporate philosophy integrating employe",
         "articles": []
       },
       {
-        "id": "comparative-benefits-quote",
+        "id": "comparative-quote",
         "icon": "●",
-        "title": "Comparative Benefits Quote",
-        "body": "Non-obligatory quote service to help emp",
+        "title": "Comparative Quote",
+        "body": "Non-obligatory quote service for busines",
         "articles": []
       }
     ]
   },
-  "wills-estates": {
-    "title": "Wills Estate Planning",
-    "color": "#3a6000",
-    "items": [
-      {
-        "id": "complimentary-will",
-        "icon": "●",
-        "title": "Complimentary Will",
-        "body": "Free professionally drafted, collected, ",
-        "articles": []
-      },
-      {
-        "id": "estate-administration",
-        "icon": "●",
-        "title": "Estate Administration",
-        "body": "Full in-house estate administration serv",
-        "articles": []
-      },
-      {
-        "id": "cost-of-dying-planning",
-        "icon": "●",
-        "title": "Cost of Dying Planning",
-        "body": "Consultation and calculation of executor",
-        "articles": []
-      },
-      {
-        "id": "legacy-protection-plan",
-        "icon": "●",
-        "title": "Legacy Protection Plan",
-        "body": "Insurance-backed solution underwritten b",
-        "articles": []
-      },
-      {
-        "id": "testamentary-trusts",
-        "icon": "●",
-        "title": "Testamentary Trusts",
-        "body": "Creation of trusts for minor children, w",
-        "articles": []
-      },
-      {
-        "id": "five-consequences-no-will",
-        "icon": "●",
-        "title": "5 Consequences of No Will",
-        "body": "Educational content outlining the legal ",
-        "articles": []
-      }
-    ]
-  },
-  "fiduciary-services": {
+  "fiduciary": {
     "title": "Fiduciary Services",
     "color": "#3a6000",
     "items": [
       {
-        "id": "will-drafting",
+        "id": "fiduciary-overview",
         "icon": "●",
-        "title": "Will Drafting",
-        "body": "Legally prepared will documents ensuring",
-        "articles": []
-      },
-      {
-        "id": "estate-planning-advice",
-        "icon": "●",
-        "title": "Estate Planning Advice",
-        "body": "Guidance on structuring an estate to min",
+        "title": "Fiduciary Overview",
+        "body": "Start-with-the-end-in-mind approach to w",
         "articles": []
       }
     ]
@@ -1071,7 +1114,7 @@ const ILSA_CONTENT = {
         "id": "money-mindset-matters",
         "icon": "●",
         "title": "Your Money Mindset Matters!",
-        "body": "Explores the millionaire mindset, abunda",
+        "body": "Explores the millionaire mindset concept",
         "articles": [
           {
             "title": "Learn more",
@@ -1083,7 +1126,7 @@ const ILSA_CONTENT = {
         "id": "secure-your-legacy",
         "icon": "●",
         "title": "Protect Your Legacy: Secure Your Familys",
-        "body": "Details the immediate and long-term fina",
+        "body": "Details the full spectrum of estate cost",
         "articles": [
           {
             "title": "Learn more",
@@ -1104,10 +1147,10 @@ const ILSA_CONTENT = {
         ]
       },
       {
-        "id": "why-disability-cover",
+        "id": "disability-cover-article",
         "icon": "●",
         "title": "Why Consider Disability Cover?",
-        "body": "Compares capital disability cover and in",
+        "body": "Compares capital disability and income p",
         "articles": [
           {
             "title": "Learn more",
@@ -1116,10 +1159,10 @@ const ILSA_CONTENT = {
         ]
       },
       {
-        "id": "worth-of-financial-advisors",
+        "id": "financial-advisors-worth",
         "icon": "●",
         "title": "The Underrated Worth of Financial Adviso",
-        "body": "Outlines five ways financial advisors ad",
+        "body": "Outlines five dimensions of advisor valu",
         "articles": [
           {
             "title": "Learn more",
@@ -1131,7 +1174,7 @@ const ILSA_CONTENT = {
         "id": "children-and-finance",
         "icon": "●",
         "title": "Children and Finance",
-        "body": "A staged guide to introducing money mana",
+        "body": "A developmental guide for teaching child",
         "articles": [
           {
             "title": "Learn more",
@@ -1152,33 +1195,91 @@ const ILSA_CONTENT = {
         ]
       }
     ]
+  },
+  "compliance-legal": {
+    "title": "Compliance Legal Documents",
+    "color": "#3a6000",
+    "items": [
+      {
+        "id": "privacy-policy",
+        "icon": "●",
+        "title": "Privacy Policy",
+        "body": "Legal document governing how attooh! col",
+        "articles": []
+      },
+      {
+        "id": "popia-policy",
+        "icon": "●",
+        "title": "POPIA Policy",
+        "body": "Policy document outlining compliance wit",
+        "articles": []
+      },
+      {
+        "id": "rmcp",
+        "icon": "●",
+        "title": "RMCP",
+        "body": "Risk Management and Compliance Programme",
+        "articles": []
+      },
+      {
+        "id": "paia",
+        "icon": "●",
+        "title": "PAIA",
+        "body": "Promotion of Access to Information Act m",
+        "articles": []
+      },
+      {
+        "id": "request-for-records",
+        "icon": "●",
+        "title": "Request for Records",
+        "body": "Form or process for submitting a formal ",
+        "articles": []
+      },
+      {
+        "id": "internal-appeal",
+        "icon": "●",
+        "title": "Internal Appeal",
+        "body": "Process document for lodging an internal",
+        "articles": []
+      },
+      {
+        "id": "fees-payable",
+        "icon": "●",
+        "title": "Fees Payable",
+        "body": "Schedule of fees applicable to PAIA reco",
+        "articles": []
+      }
+    ]
   }
 };
-
 // ── BUILD NAV BAR ─────────────────────────────────────────────────────────────
 
 const navBar = document.getElementById("nav-bar");
 
 const pathDefs = [
   {
-    "key": "new-client-onboarding",
-    "label": "New Client Discovery to Advisor Engageme"
+    "key": "personal-protection-journey",
+    "label": "Personal Protection Journey"
   },
   {
-    "key": "estate-planning-path",
-    "label": "Legacy Estate Planning Journey"
+    "key": "business-owner-protection",
+    "label": "Business Owner Protection Path"
   },
   {
-    "key": "services-exploration",
-    "label": "Services Discovery to Specialist Areas"
+    "key": "estate-planning-awareness",
+    "label": "Estate Planning Awareness Path"
   },
   {
-    "key": "blog-to-services",
-    "label": "Educational Content to Service Conversio"
+    "key": "insurance-education-to-service",
+    "label": "Insurance Education to Service"
   },
   {
-    "key": "our-story-to-services",
-    "label": "Brand Story to Financial Solutions"
+    "key": "brand-to-advisory-engagement",
+    "label": "Brand Story to Advisory Engagement"
+  },
+  {
+    "key": "youth-finance-education",
+    "label": "Youth Finance Education Path"
   }
 ];
 pathDefs.forEach(({ key, label }) => {
@@ -1405,36 +1506,34 @@ rungHubs.forEach(([ai, bi]) => {
 // ── PATH DEFINITIONS ──────────────────────────────────────────────────────────
 
 const PATHS = {
-  "new-client-onboarding": {
-    "label": "New Client Discovery to Advisor Engageme",
+  "personal-protection-journey": {
+    "label": "Personal Protection Journey",
     "color": "#9cd31e",
     "hubs": [
       "home-overview",
-      "our-story",
-      "personal-insurance"
-    ]
-  },
-  "estate-planning-path": {
-    "label": "Legacy Estate Planning Journey",
-    "color": "#3a6000",
-    "hubs": [
-      "wills-estates",
-      "blog-insights",
-      "home-overview"
-    ]
-  },
-  "services-exploration": {
-    "label": "Services Discovery to Specialist Areas",
-    "color": "#c8a000",
-    "hubs": [
       "personal-insurance",
-      "business-assurance",
-      "employee-benefits",
       "wills-estates"
     ]
   },
-  "blog-to-services": {
-    "label": "Educational Content to Service Conversio",
+  "business-owner-protection": {
+    "label": "Business Owner Protection Path",
+    "color": "#3a6000",
+    "hubs": [
+      "our-story",
+      "personal-insurance",
+      "business-assurance"
+    ]
+  },
+  "estate-planning-awareness": {
+    "label": "Estate Planning Awareness Path",
+    "color": "#c8a000",
+    "hubs": [
+      "blog-insights",
+      "wills-estates"
+    ]
+  },
+  "insurance-education-to-service": {
+    "label": "Insurance Education to Service",
     "color": "#5a8fd8",
     "hubs": [
       "blog-insights",
@@ -1442,16 +1541,66 @@ const PATHS = {
       "wills-estates"
     ]
   },
-  "our-story-to-services": {
-    "label": "Brand Story to Financial Solutions",
+  "brand-to-advisory-engagement": {
+    "label": "Brand Story to Advisory Engagement",
     "color": "#e07040",
     "hubs": [
       "our-story",
-      "personal-insurance",
-      "wills-estates"
+      "home-overview",
+      "personal-insurance"
+    ]
+  },
+  "youth-finance-education": {
+    "label": "Youth Finance Education Path",
+    "color": "#9060a8",
+    "hubs": [
+      "blog-insights",
+      "home-overview"
     ]
   }
 };
+
+// ── MODE SELECTOR ─────────────────────────────────────────────────────────────
+
+let currentMode = null;
+
+// Maps first hub of each path → path key (for Guide Me entry-point clicks)
+// Derived from PATHS so it stays correct if hub order changes
+const entryHubToPath = Object.fromEntries(
+  Object.entries(PATHS).map(([key, p]) => [p.hubs[0], key])
+);
+
+function setGuideGlows(on) {
+  Object.keys(entryHubToPath).forEach(hubId => {
+    const group = hubGroups[hubId];
+    if (!group) return;
+    const el = group.hubMesh.userData.labelEl;
+    if (!el) return;
+    el.classList.toggle('guide-entry', on);
+  });
+}
+
+function applyMode(mode) {
+  if (currentMode === mode) return;
+  currentMode = mode;
+  // Body classes drive CSS
+  document.body.classList.remove('mode-explore', 'mode-navigate', 'mode-guide');
+  document.body.classList.add('mode-' + mode);
+  // Update button active state and aria-pressed
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    const isActive = btn.dataset.mode === mode;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+  // Guide Me entry-point glows
+  setGuideGlows(mode === 'guide' && !activePath);
+}
+
+document.getElementById('mode-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.mode-btn');
+  if (!btn || activePath) return;  // block mode switching mid-path
+  applyMode(btn.dataset.mode);
+});
 
 // ── SELECTION STATE ───────────────────────────────────────────────────────────
 
@@ -1504,11 +1653,13 @@ function updatePathGuide() {
   document.getElementById("pg-next").textContent = isLast ? "Finish ✓" : "Next →";
 
   document.getElementById("cp-path-bar").style.setProperty("--pb-color", p.color);
+  document.getElementById("cp-path-bar").style.setProperty("--pb-text", p.textColor || "#fff");
   document.getElementById("cpb-label").textContent = p.label;
   document.getElementById("cpb-step").textContent = stepText;
   document.getElementById("cpb-back").style.display = pathStep === 0 ? "none" : "";
   document.getElementById("cpb-next").textContent = isLast ? "Finish ✓" : "Next →";
   document.getElementById("cpb-next").style.background = isLast ? "#27ae60" : p.color;
+  document.getElementById("cpb-next").style.color = isLast ? "#fff" : (p.textColor || "#fff");
 }
 
 function applyPathStep() {
@@ -1519,12 +1670,13 @@ function applyPathStep() {
   rotateTo(currentHub, 0.70);
   updatePathGuide();
   renderContentPanel(currentHub);
-  window.SphereAnalytics?.track("path_step_reached", { path_key: activePath, step: pathStep, hub_id: currentHub });
 }
 
 function activatePath(pathKey) {
   activePath = pathKey; pathStep = 0;
+  if (window.SphereAnalytics) window.SphereAnalytics.track('path_started', { path: pathKey, path_label: PATHS[pathKey]?.label || pathKey });
   stopPillSpotlight();
+  setGuideGlows(false);
   const p = PATHS[pathKey];
   drawPathLines(p.hubs, p.color);
   document.getElementById("path-guide").classList.add("visible");
@@ -1533,12 +1685,9 @@ function activatePath(pathKey) {
   applyPathStep();
   setActivePathPill(pathKey);
   allPill.classList.remove("active");
-  window.SphereAnalytics?.track("path_started", { path_key: pathKey, path_label: p.label });
 }
 
 function exitPath() {
-  const completedPath = activePath;
-  const completedStep = pathStep;
   activePath = null; pathStep = 0;
   selectedHubIds.clear(); hideContentPanel(); clearPathLines();
   targetRotX = null; targetRotY = null; autoRotate = true;
@@ -1546,11 +1695,8 @@ function exitPath() {
   document.getElementById("controls").style.display = "";
   document.body.classList.remove("path-active");
   setActivePathPill(null); setActiveNav("all");
-  window.SphereAnalytics?.track("path_exited", { path_key: completedPath, steps_completed: completedStep });
-  if (completedPath && PATHS[completedPath] && completedStep === PATHS[completedPath].hubs.length - 1) {
-    showEmailCapture();
-  }
   pillSpotIndex = 0; startPillSpotlight();
+  setGuideGlows(currentMode === 'guide');
 }
 
 document.getElementById("pg-exit").addEventListener("click", exitPath);
@@ -1565,6 +1711,10 @@ document.getElementById("cpb-next").addEventListener("click", () => {
   if (!activePath) return;
   if (pathStep < PATHS[activePath].hubs.length - 1) { pathStep++; applyPathStep(); } else exitPath();
 });
+document.getElementById("cpb-cta").addEventListener("click", () => {
+  if (window.SphereAnalytics) window.SphereAnalytics.track('cta_clicked', { cta: 'coffee-date', context: 'path-bar', path: activePath });
+  window.open(CTA, "_blank");
+});
 
 function selectHub(hubId) {
   if (activePath) return;
@@ -1574,8 +1724,11 @@ function selectHub(hubId) {
     autoRotate = true; setActiveNav("all"); hideContentPanel(); return;
   }
   selectedHubIds = new Set([hubId]); autoRotate = false;
+  if (window.SphereAnalytics) {
+    const hubData = [...strandA, ...strandB].find(h => h.id === hubId);
+    window.SphereAnalytics.track('hub_clicked', { hub_id: hubId, hub_label: hubData?.label || hubId });
+  }
   rotateTo(hubId); setActiveNav(hubId); renderContentPanel(hubId);
-  window.SphereAnalytics?.track("hub_clicked", { hub_id: hubId, hub_label: hubById[hubId]?.label || hubId });
 }
 
 function setActiveNav(hubId) {
@@ -1621,6 +1774,7 @@ function stopPillSpotlight() {
   document.querySelectorAll(".nav-pill.path").forEach(p => p.classList.remove("spotlight"));
 }
 startPillSpotlight();
+applyMode('navigate');
 
 navBar.addEventListener("click", e => {
   if (navDragged) return;
@@ -1672,7 +1826,13 @@ function getHit(clientX, clientY) {
 }
 
 document.getElementById("mt-close").addEventListener("click", () => miniTip.classList.remove("visible"));
-document.getElementById("mt-action").addEventListener("click", () => { const url = miniTip.dataset.url; if (url) window.open(url, "_blank"); });
+document.getElementById("mt-action").addEventListener("click", () => {
+  const url = miniTip.dataset.url;
+  if (url) {
+    if (window.SphereAnalytics) window.SphereAnalytics.track('article_clicked', { article_label: mtLabel.textContent, url });
+    window.open(url, "_blank");
+  }
+});
 
 function showMiniTip(data, clientX, clientY) {
   mtLabel.textContent  = data.label;
@@ -1698,7 +1858,15 @@ function handleClick(clientX, clientY) {
     return;
   }
   const { data } = hit.userData;
-  if (hit.userData.isHub) { selectHub(data.id); return; }
+  if (hit.userData.isHub) {
+    if (currentMode === 'guide' && entryHubToPath[data.id]) {
+      activatePath(entryHubToPath[data.id]);
+    } else {
+      selectHub(data.id);
+    }
+    return;
+  }
+  if (window.SphereAnalytics) window.SphereAnalytics.track('article_clicked', { article_id: data.id, article_label: data.label, hub_id: hit.userData.hubId });
   showMiniTip(data, clientX, clientY);
 }
 
@@ -1831,6 +1999,15 @@ function animate() {
   updateDepth();
   renderer.render(scene, camera);
   labelRenderer.render(scene, camera);
+  // Labels follow sphere surface
+  allClickable.forEach(({ mesh }) => {
+    const el = mesh.userData.labelEl;
+    if (!el) return;
+    const baseT = el.style.transform;
+    if (!baseT) return;
+    const tilt = (Math.sin((mesh.userData.nodePhi || 0) + rotY) * -42).toFixed(1);
+    el.style.transform = `${baseT} perspective(280px) rotateY(${tilt}deg)`;
+  });
 }
 animate();
 
@@ -1863,7 +2040,7 @@ function renderContentPanel(hubId) {
       li.addEventListener("click", () => {
         const url = li.dataset.url;
         if (url) {
-          window.SphereAnalytics?.track("article_clicked", { hub_id: hubId, article_url: url });
+          if (window.SphereAnalytics) window.SphereAnalytics.track('article_clicked', { article_title: li.querySelector('.cp-article-title')?.textContent, hub_id: hubId, hub_label: data.title, url });
           window.open(url, "_blank");
         }
       });
@@ -1875,11 +2052,13 @@ function renderContentPanel(hubId) {
   const ctaCard = document.createElement("div"); ctaCard.style.padding = "0 0 16px"; ctaCard.style.textAlign = "center";
   const ctaBtn = document.createElement("button"); ctaBtn.className = "cp-cta-btn";
   ctaBtn.textContent = "☕ Book a Free Consultation";
-  ctaBtn.addEventListener("click", () => window.open(CTA, "_blank"));
+  ctaBtn.addEventListener("click", () => {
+    if (window.SphereAnalytics) window.SphereAnalytics.track('cta_clicked', { cta: 'book-consultation', hub_id: hubId, hub_label: data.title });
+    window.open(CTA, "_blank");
+  });
   ctaCard.appendChild(ctaBtn); itemsEl.appendChild(ctaCard);
 
   contentPanel.classList.add("visible");
-  window.SphereAnalytics?.track("panel_opened", { hub_id: hubId });
 }
 
 function hideContentPanel() {
@@ -1889,90 +2068,10 @@ function hideContentPanel() {
 
 document.getElementById("cp-admin-toggle").addEventListener("change", e => {
   document.body.classList.toggle("admin-mode", e.target.checked);
-  document.getElementById("cp-heatmap-btn").style.display = e.target.checked ? "block" : "none";
-  if (!e.target.checked) clearHeatmap();
   if (currentHubId) renderContentPanel(currentHubId);
 });
 
-// ── HEATMAP ──────────────────────────────────────────────────────────────────
-async function loadAndApplyHeatmap() {
-  const script = document.querySelector("script[data-sphere-id]");
-  const SPHERE_ID = script?.dataset?.sphereId || "attooh-sphere";
-  const API = script?.dataset?.apiUrl || "https://vrrrt-api-production.up.railway.app/analytics";
-  try {
-    const res = await fetch(`${API}/heatmap/${SPHERE_ID}?days=30`);
-    const { heatmap } = await res.json();
-    if (!heatmap || Object.keys(heatmap).length === 0) return;
-    const max = Math.max(...Object.values(heatmap));
-    allClickable.forEach(({ mesh }) => {
-      const el = mesh.userData.labelEl;
-      if (!el) return;
-      const hubId = mesh.userData.isHub ? mesh.userData.data.id : mesh.userData.hubId;
-      const count = heatmap[hubId] || 0;
-      const ratio = max > 0 ? count / max : 0;
-      el.classList.remove("heatmap-hot","heatmap-warm","heatmap-mild","heatmap-cool","heatmap-cold");
-      if (ratio > 0.75)      el.classList.add("heatmap-hot");
-      else if (ratio > 0.50) el.classList.add("heatmap-warm");
-      else if (ratio > 0.25) el.classList.add("heatmap-mild");
-      else if (ratio > 0.05) el.classList.add("heatmap-cool");
-      else                   el.classList.add("heatmap-cold");
-    });
-    document.body.classList.add("heatmap-mode");
-  } catch (err) {
-    console.warn("Heatmap load failed:", err);
-  }
-}
-
-function clearHeatmap() {
-  document.body.classList.remove("heatmap-mode");
-  allClickable.forEach(({ mesh }) => {
-    const el = mesh.userData.labelEl;
-    if (!el) return;
-    el.classList.remove("heatmap-hot","heatmap-warm","heatmap-mild","heatmap-cool","heatmap-cold");
-  });
-}
-
-let heatmapActive = false;
-document.getElementById("cp-heatmap-btn").addEventListener("click", () => {
-  heatmapActive = !heatmapActive;
-  if (heatmapActive) {
-    loadAndApplyHeatmap();
-    document.getElementById("cp-heatmap-btn").textContent = "❄️ Clear heatmap";
-  } else {
-    clearHeatmap();
-    document.getElementById("cp-heatmap-btn").textContent = "🔥 Heatmap";
-  }
-});
-
-// ── EMAIL CAPTURE ─────────────────────────────────────────────────────────────
-function showEmailCapture() {
-  const el = document.getElementById("email-capture");
-  if (!el) return;
-  setTimeout(() => { el.style.display = "block"; }, 2000);
-}
-
-document.getElementById("email-submit").addEventListener("click", async () => {
-  const email = document.getElementById("email-input").value.trim();
-  if (!email || !email.includes("@")) return;
-  await window.SphereAnalytics?.identify(email);
-  window.SphereAnalytics?.track("email_captured");
-  const el = document.getElementById("email-capture");
-  if (el) {
-    el.innerHTML = "<div style=\"color:#7CC68D;font-weight:800;font-size:13px;padding:10px;\">You'll hear from us soon!</div>";
-    setTimeout(() => { el.style.display = "none"; }, 2500);
-  }
-});
-
-document.getElementById("email-dismiss").addEventListener("click", () => {
-  const el = document.getElementById("email-capture");
-  if (el) el.style.display = "none";
-  window.SphereAnalytics?.track("email_capture_dismissed");
-});
-
 </script>
-<script src="analytics.js"
-  data-sphere-id="attooh-sphere"
-  data-api-url="https://vrrrt-api-production.up.railway.app/analytics"
-  defer></script>
+<script src="analytics.js" data-sphere-id="attooh-sphere"></script>
 </body>
 </html>
