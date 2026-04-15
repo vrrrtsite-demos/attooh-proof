@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="author" content="Jakes Schoeman">
+<title>attooh.co.za — Knowledge Sphere</title>
+<!--
+  Knowledge Graph Technology — Proprietary concept and implementation.
+  Developed by Jakes Schoeman. All rights reserved.
+  Unauthorised reproduction or reuse prohibited.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #fff; font-family: 'Lato', sans-serif; overflow: hidden; height: 100vh; width: 100vw; }
+
+  #header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: #fff; border-bottom: 1px solid #e8e8e0;
+    height: 52px; display: flex; align-items: center;
+  }
+  #change-path {
+    flex-shrink: 0; padding: 0 14px; height: 100%;
+    display: flex; align-items: center;
+    font-size: 11px; font-weight: 800; color: #9cd31e;
+    cursor: pointer; border-left: 1px solid #eee;
+    white-space: nowrap; font-family: 'Lato', sans-serif;
+    transition: background 0.15s;
+  }
+  #change-path:hover { background: rgba(156,211,30,0.07); }
+
+  #logo-pin {
+    flex-shrink: 0; padding: 0 16px;
+    display: flex; align-items: center;
+    border-right: 1px solid #eee; height: 100%;
+  }
+
+  #nav-wrap {
+    flex: 1; min-width: 0; position: relative; height: 100%; overflow: hidden;
+  }
+  #nav-wrap::after {
+    content: ''; pointer-events: none;
+    position: absolute; top: 0; right: 0; width: 40px; height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1));
+    z-index: 1;
+  }
+  #nav-bar {
+    display: flex; align-items: center; gap: 6px; padding: 0 12px;
+    overflow-x: scroll; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    touch-action: pan-x; cursor: grab; height: 100%; width: 100%;
+  }
+  #nav-bar::-webkit-scrollbar { display: none; }
+  #nav-bar:active { cursor: grabbing; }
+
+  .nav-pill {
+    flex-shrink: 0; cursor: pointer; white-space: nowrap;
+    font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 800;
+    padding: 4px 12px; border-radius: 20px; border: 1.5px solid transparent;
+    transition: all 0.18s ease; letter-spacing: 0.1px; user-select: none;
+  }
+  .nav-pill.all { background: #f0f0f0; color: #666; border-color: #ddd; }
+  .nav-pill.all.active, .nav-pill.all:hover { background: #333; color: #fff; border-color: #333; }
+
+  .nav-pill.path { font-size: 11px; font-weight: 800; padding: 4px 13px; background: #f7f7f7; color: #333; border-color: #ddd; }
+  .nav-pill.path:hover:not(.active) { background: #eee; border-color: #bbb; }
+  .nav-pill.path.active { color: #fff; border-color: transparent; box-shadow: 0 2px 10px rgba(0,0,0,0.20); }
+    .nav-pill.path[data-path="new-client-onboarding"].active { background: #9cd31e; }
+  .nav-pill.path[data-path="estate-planning-path"].active { background: #3a6000; }
+  .nav-pill.path[data-path="services-exploration"].active { background: #c8a000; }
+  .nav-pill.path[data-path="blog-to-services"].active { background: #5a8fd8; }
+  .nav-pill.path[data-path="our-story-to-services"].active { background: #e07040; }
+
+  .nav-pill.a { background: rgba(156,211,30,0.10); color: #3a6000; border-color: rgba(156,211,30,0.45); }
+  .nav-pill.a.active { background: #9cd31e; color: #1a3000; border-color: #9cd31e; box-shadow: 0 2px 10px rgba(156,211,30,0.40); }
+  .nav-pill.a:hover:not(.active) { background: rgba(156,211,30,0.20); }
+
+  .nav-pill.b { background: rgba(58,96,0,0.07); color: #3a6000; border-color: rgba(58,96,0,0.28); }
+  .nav-pill.b.active { background: #3a6000; color: #fff; border-color: #3a6000; box-shadow: 0 2px 10px rgba(58,96,0,0.35); }
+  .nav-pill.b:hover:not(.active) { background: rgba(58,96,0,0.13); }
+
+  .nav-divider { flex-shrink: 0; width: 1px; height: 20px; background: #ddd; margin: 0 4px; }
+
+  .nav-cta {
+    flex-shrink: 0; cursor: pointer; white-space: nowrap;
+    font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 800;
+    padding: 5px 14px; border-radius: 20px; letter-spacing: 0.1px; user-select: none;
+    background: #9cd31e; color: #1a3000; border: none; transition: all 0.18s ease;
+  }
+  .nav-cta:hover { background: #7aaa10; }
+
+  #bottom-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+    background: rgba(255,255,255,0.96); border-top: 1px solid #e8e8e0;
+    height: 44px; display: flex; align-items: center;
+    backdrop-filter: blur(8px);
+  }
+  #bottom-scroll {
+    display: flex; align-items: center; gap: 6px; padding: 0 14px;
+    overflow-x: scroll; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    touch-action: pan-x; height: 100%; width: 100%;
+  }
+  #bottom-scroll::-webkit-scrollbar { display: none; }
+  #canvas-container { bottom: 44px; }
+
+  #canvas-container { position: fixed; top: 52px; left: 0; right: 0; bottom: 0; cursor: grab; }
+
+  .node-label {
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    white-space: nowrap; transition: opacity 0.25s; letter-spacing: 0.1px;
+    pointer-events: auto; cursor: pointer;
+  }
+  .node-label.hub-a   { color: #2a4e00; background: rgba(255,255,255,0.95); border: 1.5px solid rgba(156,211,30,0.70); box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
+  .node-label.hub-b   { color: #1a3000; background: rgba(255,255,255,0.95); border: 1.5px solid rgba(58,96,0,0.55); box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
+  .node-label.child-a { font-size: 9px; font-weight: 700; color: #3a6000; background: rgba(255,255,255,0.88); border: 1px solid rgba(156,211,30,0.35); padding: 1px 7px; }
+  .node-label.child-b { font-size: 9px; font-weight: 700; color: #3a6000; background: rgba(255,255,255,0.88); border: 1px solid rgba(58,96,0,0.28); padding: 1px 7px; }
+
+  #mini-tip {
+    position: fixed; display: none; z-index: 500;
+    background: #1a2e00; border-radius: 14px; padding: 0;
+    width: 300px; pointer-events: auto; cursor: default;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.50), 0 0 0 1px rgba(156,211,30,0.35);
+    overflow: hidden;
+  }
+  #mini-tip.visible { display: block; animation: tipIn 0.18s ease; }
+  @keyframes tipIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  #mt-content { padding: 14px 16px; }
+  #mt-label  { font-size: 12px; font-weight: 800; color: #9cd31e; margin-bottom: 5px; font-family: 'Lato', sans-serif; }
+  #mt-body   { font-size: 11px; color: rgba(255,255,255,0.82); line-height: 1.6; }
+  #mt-action { font-size: 10px; color: #c8f040; margin-top: 8px; font-weight: 800; cursor: pointer; }
+  #mt-close  { position: absolute; top: 8px; right: 10px; color: rgba(255,255,255,0.5); font-size: 16px; cursor: pointer; line-height: 1; z-index: 1; }
+
+  #controls {
+    position: fixed; bottom: 64px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 100; pointer-events: none;
+  }
+  .ctrl {
+    background: rgba(255,255,255,0.92); border: 1px solid #e0e0e0; border-radius: 20px;
+    padding: 5px 12px; display: flex; align-items: center; gap: 6px;
+    font-family: 'Lato', sans-serif; font-size: 10px; font-weight: 700;
+    color: #555; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .ctrl-icon { font-size: 13px; line-height: 1; }
+  .ctrl-dot-a { width: 10px; height: 10px; border-radius: 50%; background: #9cd31e; display: inline-block; flex-shrink: 0; }
+  .ctrl-dot-b { width: 10px; height: 10px; border-radius: 50%; background: #3a6000; display: inline-block; flex-shrink: 0; margin-left: -4px; }
+
+  @media (max-width: 600px) {
+    #hemi-labels { display: none; }
+    #controls { gap: 3px; bottom: 14px; }
+    .ctrl { font-size: 9px; padding: 4px 7px; gap: 3px; }
+    .ctrl-long { display: none; }
+    #logo-pin { padding: 0 8px; }
+    #logo-pin .logo-text { font-size: 18px; }
+    .node-label.child-a, .node-label.child-b { display: none; }
+    #content-panel { width: 100%; top: 52px; bottom: 44px; }
+  }
+
+  /* ── Nav pill spotlight carousel ── */
+  .nav-pill.path.spotlight {
+    background: rgba(248,158,52,0.14) !important;
+    border-color: rgba(248,158,52,0.65) !important;
+    color: #7A4A00 !important;
+    box-shadow: 0 0 0 2.5px rgba(248,158,52,0.45), 0 4px 16px rgba(248,158,52,0.25) !important;
+    transform: scale(1.07);
+  }
+
+  #path-guide {
+    display: none;
+    position: fixed; bottom: 54px; left: 20px; z-index: 300;
+    background: rgba(20,40,10,0.94); border-radius: 18px;
+    padding: 14px 20px; min-width: 280px; max-width: 360px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.40);
+    border: 1.5px solid rgba(156,211,30,0.20);
+    text-align: center;
+  }
+  #path-guide.visible { display: block; animation: tipIn 0.3s ease; }
+  #pg-exit { position: absolute; top: 10px; right: 14px; font-size: 10px; color: rgba(255,255,255,0.35); cursor: pointer; font-weight: 700; }
+  #pg-exit:hover { color: rgba(255,255,255,0.7); }
+  #pg-label { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--path-color, #9cd31e); margin-bottom: 6px; font-family: 'Lato', sans-serif; }
+  #pg-step  { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 10px; font-family: 'Lato', sans-serif; line-height: 1.3; }
+  #pg-dots  { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; }
+  .pg-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.20); transition: all 0.2s; }
+  .pg-dot.done   { background: var(--path-color, #9cd31e); opacity: 0.6; }
+  .pg-dot.active { background: var(--path-color, #9cd31e); transform: scale(1.35); }
+  #pg-nav { display: flex; gap: 10px; justify-content: center; }
+  #pg-nav button { font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 800; padding: 7px 18px; border-radius: 20px; border: none; cursor: pointer; transition: all 0.15s; }
+  #pg-back { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.6); }
+  #pg-back:hover { background: rgba(255,255,255,0.18); color: #fff; }
+  #pg-next { background: var(--path-color, #9cd31e); color: #1a3000; box-shadow: 0 2px 10px rgba(0,0,0,0.25); }
+  #pg-next:hover { opacity: 0.88; }
+
+  #hemi-labels {
+    position: fixed; left: 18px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 8px; z-index: 100; pointer-events: none;
+  }
+  .hemi-tag { font-family: 'Lato', sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; }
+  .hemi-tag.a { background: rgba(156,211,30,0.12); color: #3a6000; border: 1px solid rgba(156,211,30,0.35); }
+  .hemi-tag.b { background: rgba(58,96,0,0.10); color: #3a6000; border: 1px solid rgba(58,96,0,0.25); }
+
+  #content-panel {
+    position: fixed; top: 52px; right: 0; bottom: 44px;
+    width: 380px; z-index: 300;
+    background: rgba(255,255,255,0.97);
+    border-left: 1px solid #eee;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  #content-panel.visible { transform: translateX(0); }
+
+  #cp-resize-handle {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+    cursor: col-resize; z-index: 10; background: transparent; transition: background 0.2s;
+  }
+  #cp-resize-handle:hover, #cp-resize-handle.dragging { background: rgba(156,211,30,0.30); }
+  #cp-resize-handle::after { content: ''; position: absolute; left: 2px; top: 50%; transform: translateY(-50%); width: 2px; height: 32px; border-radius: 2px; background: rgba(156,211,30,0.50); }
+
+  /* ── Path bar (top of content panel when journey active) ── */
+  #cp-path-bar {
+    display: none;
+    position: absolute; top: 0; left: 0; right: 0; height: 46px; z-index: 10;
+    align-items: center; gap: 10px; padding: 0 12px;
+    background: #fff; border-bottom: 2px solid var(--pb-color, #9cd31e);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  #cpb-info { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  #cpb-label { font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--pb-color, #9cd31e); font-family: 'Lato', sans-serif; }
+  #cpb-step  { font-size: 12px; font-weight: 800; color: #222; font-family: 'Lato', sans-serif; }
+  #cpb-back, #cpb-next {
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+    padding: 5px 14px; border-radius: 20px; border: none; cursor: pointer;
+    transition: all 0.15s; white-space: nowrap; flex-shrink: 0;
+  }
+  #cpb-back { background: #f0f0f0; color: #666; }
+  #cpb-back:hover { background: #e0e0e0; }
+  #cpb-next { background: var(--pb-color, #9cd31e); color: #1a3000; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+  #cpb-next:hover { opacity: 0.88; }
+  #cpb-close { background: none; border: none; cursor: pointer; font-size: 18px; color: #aaa; line-height: 1; padding: 4px 6px; flex-shrink: 0; transition: color 0.15s; }
+  #cpb-close:hover { color: #555; }
+
+  body.path-active.panel-open #cp-path-bar { display: flex; }
+  body.path-active.panel-open #cp-inner { top: 46px; }
+  body.panel-open #path-guide { display: none !important; }
+
+  #cp-inner {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 40px;
+    overflow-y: auto; padding: 20px 20px 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin; scrollbar-color: #ccc transparent;
+  }
+  #cp-step-badge {
+    display: inline-block; font-size: 10px; font-weight: 800;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+    background: rgba(156,211,30,0.14); color: #3a6000;
+    font-family: 'Lato', sans-serif;
+  }
+  #cp-title { font-size: 18px; font-weight: 900; color: #1a1a2e; margin-bottom: 8px; line-height: 1.25; font-family: 'Lato', sans-serif; }
+  #cp-intro { font-size: 13px; color: #666; line-height: 1.65; margin-bottom: 20px; font-family: 'Lato', sans-serif; border-left: 3px solid #9cd31e; padding-left: 12px; }
+
+  .cp-card { background: #f9f9f9; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; position: relative; border: 1px solid #f0f0f0; transition: box-shadow 0.15s; }
+  .cp-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .cp-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .cp-card-icon { font-size: 18px; }
+  .cp-card-title { font-size: 13px; font-weight: 800; color: #1a1a2e; font-family: 'Lato', sans-serif; }
+  .cp-card-body  { font-size: 12px; color: #555; line-height: 1.65; font-family: 'Lato', sans-serif; margin-bottom: 8px; }
+
+  .cp-articles { margin-top: 10px; }
+  .cp-articles-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; font-family: 'Lato', sans-serif; }
+  .cp-article-list { list-style: none; padding: 0; margin: 0; }
+  .cp-article-item { display: flex; align-items: baseline; gap: 6px; padding: 4px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
+  .cp-article-item:hover .cp-article-title { color: #3a6000; }
+  .cp-article-dot { color: #9cd31e; font-size: 14px; flex-shrink: 0; }
+  .cp-article-title { font-size: 12px; color: #444; font-family: 'Lato', sans-serif; line-height: 1.4; }
+
+  /* Book a meeting CTA inside panel */
+  .cp-cta-btn {
+    display: inline-block; margin-top: 8px;
+    background: #9cd31e; color: #1a3000;
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+    padding: 6px 16px; border-radius: 20px; cursor: pointer; border: none;
+    transition: all 0.15s;
+  }
+  .cp-cta-btn:hover { background: #7aaa10; }
+
+  #cp-admin-bar {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 40px; border-top: 1px solid #eee;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; background: #fafafa;
+  }
+  #cp-admin-label { font-size: 11px; color: #aaa; font-family: 'Lato', sans-serif; font-weight: 700; }
+  .cp-toggle-wrap { position: relative; display: inline-block; width: 36px; height: 20px; }
+  .cp-toggle-wrap input { opacity: 0; width: 0; height: 0; }
+  .cp-toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #ddd; border-radius: 20px; transition: 0.2s; }
+  .cp-toggle-slider:before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.2s; }
+  .cp-toggle-wrap input:checked + .cp-toggle-slider { background: #9cd31e; }
+  .cp-toggle-wrap input:checked + .cp-toggle-slider:before { transform: translateX(16px); }
+
+  @media (max-width: 860px) {
+    #content-panel { width: 100%; top: 52px; bottom: 44px; }
+    #cp-admin-bar { position: sticky; bottom: 0; }
+    #path-guide {
+      left: 0; right: 0; bottom: 44px; border-radius: 0;
+      max-width: 100%; min-width: 100%; box-sizing: border-box; padding: 8px 14px;
+    }
+    #path-guide.visible { display: flex; flex-direction: row; align-items: center; gap: 8px; }
+    #pg-label { display: none; }
+    #pg-dots  { display: none; }
+    #pg-step  { font-size: 12px; margin: 0; flex: 1; line-height: 1.3; }
+    #pg-exit  { position: static; font-size: 10px; flex-shrink: 0; order: -1; }
+    #pg-nav   { flex-direction: row; gap: 6px; margin: 0; flex-shrink: 0; }
+    #pg-nav button { padding: 5px 14px; font-size: 11px; }
+    body.path-active:not(.panel-open) #content-panel { bottom: 96px; }
+  }
+
+/* ── HEATMAP ──────────────────────────────────────────────────────── */
+body.heatmap-mode .node-label.hub-a,
+body.heatmap-mode .node-label.hub-b { transition: background 0.8s ease, border-color 0.8s ease; }
+.heatmap-hot   { background: rgba(231,76,60,0.92)  !important; border-color: #c0392b !important; color: #fff !important; }
+.heatmap-warm  { background: rgba(230,126,34,0.88) !important; border-color: #e67e22 !important; color: #fff !important; }
+.heatmap-mild  { background: rgba(241,196,15,0.85) !important; border-color: #f39c12 !important; color: #333 !important; }
+.heatmap-cool  { background: rgba(52,152,219,0.80) !important; border-color: #2980b9 !important; color: #fff !important; }
+.heatmap-cold  { background: rgba(200,200,200,0.50) !important; border-color: #ccc     !important; color: #666 !important; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div id="logo-pin">
+    <span style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:#3a6000;letter-spacing:0.5px;">attooh.co.za</span>
+  </div>
+  <div id="nav-wrap"><div id="nav-bar"></div></div>
+  <div id="change-path" title="Choose a different guide">← My Guide</div>
+</div>
+
+<div id="hemi-labels">
+  
+</div>
+
+<div id="canvas-container"></div>
+
+<div id="mini-tip">
+  <span id="mt-close">✕</span>
+  <div id="mt-content">
+    <div id="mt-label"></div>
+    <div id="mt-body"></div>
+    <div id="mt-action"></div>
+  </div>
+</div>
+
+<div id="content-panel">
+  <div id="cp-resize-handle"></div>
+  <div id="cp-path-bar">
+    <button id="cpb-close" title="Exit guide">✕</button>
+    <button id="cpb-back">← Back</button>
+    <div id="cpb-info">
+      <span id="cpb-label"></span>
+      <span id="cpb-step"></span>
+    </div>
+    <button id="cpb-next">Next →</button>
+  </div>
+  <div id="cp-inner">
+    <div id="cp-step-badge"></div>
+    <div id="cp-title"></div>
+    <div id="cp-intro"></div>
+    <div id="cp-items"></div>
+  </div>
+  <div id="cp-admin-bar">
+    <span id="cp-admin-label">Admin mode</span>
+    <button id="cp-heatmap-btn" style="display:none;font-family:sans-serif;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer;">🔥 Heatmap</button>
+    <label class="cp-toggle-wrap">
+      <input type="checkbox" id="cp-admin-toggle">
+      <span class="cp-toggle-slider"></span>
+    </label>
+  </div>
+</div>
+
+<div id="bottom-bar"><div id="bottom-scroll"></div></div>
+
+<div id="controls">
+  <div class="ctrl"><span class="ctrl-icon">🫧</span> <span class="ctrl-long">Select a path from the top bar</span></div>
+  <div class="ctrl"><span class="ctrl-icon">👆</span> <span class="ctrl-long">Drag to spin</span></div>
+  <div class="ctrl"><span class="ctrl-icon">🔍</span> <span class="ctrl-long">Scroll to zoom</span></div>
+  <div class="ctrl"><span class="ctrl-dot-a"></span><span class="ctrl-dot-b"></span> <span class="ctrl-long">Tap any node to read</span></div>
+</div>
+
+<div id="path-guide">
+  <div id="pg-exit">✕ Exit guide</div>
+  <div id="pg-label"></div>
+  <div id="pg-step"></div>
+  <div id="pg-dots"></div>
+  <div id="pg-nav">
+    <button id="pg-back">← Back</button>
+    <button id="pg-next">Next →</button>
+  </div>
+</div>
+
+<!-- Email capture card — shown 2s after path completion -->
+<div id="email-capture" style="display:none;position:fixed;bottom:54px;left:50%;transform:translateX(-50%);z-index:500;background:#1a1a2e;border-radius:18px;padding:20px 24px;width:320px;box-shadow:0 8px 32px rgba(0,0,0,0.40);border:1.5px solid rgba(58,96,0,0.20);text-align:center;">
+  <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;">Want a personalised guide?</div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:14px;">Based on what you just explored — free, no spam.</div>
+  <input id="email-input" type="email" placeholder="your@email.com" style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid #444;background:#fff;font-size:12px;margin-bottom:8px;box-sizing:border-box;">
+  <button id="email-submit" style="width:100%;padding:8px;border-radius:20px;background:#3a6000;color:#fff;border:none;font-weight:700;font-size:12px;cursor:pointer;">Send me the guide →</button>
+  <div id="email-dismiss" style="margin-top:8px;font-size:10px;color:rgba(255,255,255,0.35);cursor:pointer;">No thanks</div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from "three";
+import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
+
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const strandA = [
+  {
+    "id": "home-overview",
+    "label": "Home Brand Overview",
+    "strand": "A",
+    "tip": "The main entry point introducing attooh!",
+    "children": [
+      {
+        "id": "our-approach",
+        "label": "Our Approach",
+        "tip": "Describes attooh!s commitment to making "
+      },
+      {
+        "id": "our-values",
+        "label": "Our Values",
+        "tip": "Outlines attooh!s ethical, value-driven "
+      },
+      {
+        "id": "our-process",
+        "label": "Our Process",
+        "tip": "Three-step client journey: share details"
+      },
+      {
+        "id": "management-team",
+        "label": "Management Team",
+        "tip": "Profiles of the leadership team includin"
+      },
+      {
+        "id": "financial-plan-faq",
+        "label": "Financial Plan FAQ",
+        "tip": "Answers common client questions about wh"
+      }
+    ]
+  },
+  {
+    "id": "our-story",
+    "label": "attooh! Our Story",
+    "strand": "A",
+    "tip": "The origin story, mission, and core focu",
+    "children": [
+      {
+        "id": "brand-origin",
+        "label": "Brand Origin",
+        "tip": "Recounts how the name attooh! came from "
+      },
+      {
+        "id": "abundance-mindset",
+        "label": "Abundance Mindset",
+        "tip": "Explains attooh!s philosophy of reframin"
+      },
+      {
+        "id": "core-focus",
+        "label": "Core Focus",
+        "tip": "Describes attooh!s dedication to serving"
+      },
+      {
+        "id": "personal-finance-overview",
+        "label": "Personal Finance Overview",
+        "tip": "Introduces personal finance as the art o"
+      },
+      {
+        "id": "business-insurance-overview",
+        "label": "Business Insurance Overview",
+        "tip": "Explains why business insurance is criti"
+      },
+      {
+        "id": "employee-benefits-overview",
+        "label": "Employee Benefits Overview",
+        "tip": "Outlines the importance of competitive e"
+      }
+    ]
+  },
+  {
+    "id": "personal-insurance",
+    "label": "Personal Family Insurance",
+    "strand": "A",
+    "tip": "Individual and family insurance products",
+    "children": [
+      {
+        "id": "individual-family-insurance",
+        "label": "Individual Family Insurance",
+        "tip": "Flexible life cover with customisable di"
+      },
+      {
+        "id": "short-term-insurance",
+        "label": "Short-Term Insurance",
+        "tip": "Comprehensive, flexible, and affordable "
+      },
+      {
+        "id": "dread-disease",
+        "label": "Dread Disease Cover",
+        "tip": "Protection against major illnesses such "
+      },
+      {
+        "id": "disability-cover",
+        "label": "Disability Cover",
+        "tip": "Capital lump sum paid out upon permanent"
+      },
+      {
+        "id": "income-protection",
+        "label": "Income Protection",
+        "tip": "Replaces a portion of earnings if unable"
+      },
+      {
+        "id": "gap-cover",
+        "label": "Gap Cover",
+        "tip": "Short-term policy covering the shortfall"
+      }
+    ]
+  },
+  {
+    "id": "health-wealth",
+    "label": "Health Wealth Solutions",
+    "strand": "A",
+    "tip": "Integrated health and wealth products in",
+    "children": [
+      {
+        "id": "health-cover",
+        "label": "Health Cover",
+        "tip": "Monthly premium medical cover ensuring c"
+      },
+      {
+        "id": "investments",
+        "label": "Investments",
+        "tip": "Strategies to grow, protect, and transfe"
+      },
+      {
+        "id": "long-term-savings-offshore",
+        "label": "Long-Term Savings Offshore Investments",
+        "tip": "Diversified investment allocation across"
+      },
+      {
+        "id": "retirement-planning",
+        "label": "Retirement Planning",
+        "tip": "Creating and managing a financial plan f"
+      },
+      {
+        "id": "global-education",
+        "label": "Global Education Savings",
+        "tip": "Financial safeguard ensuring a childs ed"
+      }
+    ]
+  }
+];
+
+const strandB = [
+  {
+    "id": "business-assurance",
+    "label": "Business Assurance",
+    "strand": "B",
+    "tip": "Insurance and risk solutions designed to",
+    "children": [
+      {
+        "id": "buy-sell-agreements",
+        "label": "Buy-and-Sell Agreements",
+        "tip": "Ensures business continuity by funding s"
+      },
+      {
+        "id": "keyman-insurance",
+        "label": "Keyman Insurance",
+        "tip": "Compensates for financial losses from th"
+      },
+      {
+        "id": "contingent-liability",
+        "label": "Contingent Liability Policy",
+        "tip": "Protects business liquidity and personal"
+      },
+      {
+        "id": "business-risk-insurance",
+        "label": "Business Risk Insurance",
+        "tip": "Broad coverage against business-specific"
+      },
+      {
+        "id": "cyber-liability",
+        "label": "Cyber Liability Insurance",
+        "tip": "Covers financial losses arising from cyb"
+      },
+      {
+        "id": "property-insurance",
+        "label": "Property Insurance",
+        "tip": "Protects business property assets agains"
+      }
+    ]
+  },
+  {
+    "id": "employee-benefits",
+    "label": "Employee Benefits",
+    "strand": "B",
+    "tip": "Corporate benefit solutions helping busi",
+    "children": [
+      {
+        "id": "corporate-benefits-consulting",
+        "label": "Corporate Benefits Consulting",
+        "tip": "attooh! assists companies in designing b"
+      },
+      {
+        "id": "financial-wellness-employees",
+        "label": "Financial Wellness for Employees",
+        "tip": "Education and support programmes helping"
+      },
+      {
+        "id": "comparative-benefits-quote",
+        "label": "Comparative Benefits Quote",
+        "tip": "Non-obligatory quote service to help emp"
+      }
+    ]
+  },
+  {
+    "id": "wills-estates",
+    "label": "Wills Estate Planning",
+    "strand": "B",
+    "tip": "Complimentary will drafting, estate admi",
+    "children": [
+      {
+        "id": "complimentary-will",
+        "label": "Complimentary Will",
+        "tip": "Free professionally drafted, collected, "
+      },
+      {
+        "id": "estate-administration",
+        "label": "Estate Administration",
+        "tip": "Full in-house estate administration serv"
+      },
+      {
+        "id": "cost-of-dying-planning",
+        "label": "Cost of Dying Planning",
+        "tip": "Consultation and calculation of executor"
+      },
+      {
+        "id": "legacy-protection-plan",
+        "label": "Legacy Protection Plan",
+        "tip": "Insurance-backed solution underwritten b"
+      },
+      {
+        "id": "testamentary-trusts",
+        "label": "Testamentary Trusts",
+        "tip": "Creation of trusts for minor children, w"
+      },
+      {
+        "id": "five-consequences-no-will",
+        "label": "5 Consequences of No Will",
+        "tip": "Educational content outlining the legal "
+      }
+    ]
+  },
+  {
+    "id": "fiduciary-services",
+    "label": "Fiduciary Services",
+    "strand": "B",
+    "tip": "Legal and estate planning services ensur",
+    "children": [
+      {
+        "id": "will-drafting",
+        "label": "Will Drafting",
+        "tip": "Legally prepared will documents ensuring"
+      },
+      {
+        "id": "estate-planning-advice",
+        "label": "Estate Planning Advice",
+        "tip": "Guidance on structuring an estate to min"
+      }
+    ]
+  },
+  {
+    "id": "blog-insights",
+    "label": "Blog Financial Insights",
+    "strand": "B",
+    "tip": "Educational articles covering financial ",
+    "children": [
+      {
+        "id": "money-mindset-matters",
+        "label": "Your Money Mindset Matters!",
+        "tip": "Explores the millionaire mindset, abunda",
+        "url": "https://attooh.co.za/blog/b/money-mindset-matters"
+      },
+      {
+        "id": "secure-your-legacy",
+        "label": "Protect Your Legacy: Secure Your Familys",
+        "tip": "Details the immediate and long-term fina",
+        "url": "https://attooh.co.za/blog/b/secure-your-legacy"
+      },
+      {
+        "id": "financial-management-recipe",
+        "label": "Financial Management, Recipe for Success",
+        "tip": "Uses a baking metaphor to explain goal-s",
+        "url": "https://attooh.co.za/blog/b/financial-management-recipe-for-success"
+      },
+      {
+        "id": "why-disability-cover",
+        "label": "Why Consider Disability Cover?",
+        "tip": "Compares capital disability cover and in",
+        "url": "https://attooh.co.za/blog/b/why-consider-disability-insurance"
+      },
+      {
+        "id": "worth-of-financial-advisors",
+        "label": "The Underrated Worth of Financial Adviso",
+        "tip": "Outlines five ways financial advisors ad",
+        "url": "https://attooh.co.za/blog/b/the-underrated-worth-of-financial-advisors"
+      },
+      {
+        "id": "children-and-finance",
+        "label": "Children and Finance",
+        "tip": "A staged guide to introducing money mana",
+        "url": "https://attooh.co.za/blog/b/children-and-finance"
+      },
+      {
+        "id": "teens-and-budgeting",
+        "label": "Teaching Your Teenager the 50/30/20 Budg",
+        "tip": "Applies the 50/30/20 budgeting framework",
+        "url": "https://attooh.co.za/blog/b/teens-and-budgeting"
+      }
+    ]
+  }
+];
+
+const rungHubs = [[0,0],[1,1],[2,2],[3,3]];
+
+const hubById = Object.fromEntries([...strandA, ...strandB].map(h => [h.id, h]));
+
+// ── CONTENT DATA ─────────────────────────────────────────────────────────────
+
+const ILSA_CONTENT = {
+  "home-overview": {
+    "title": "Home Brand Overview",
+    "color": "#9cd31e",
+    "items": [
+      {
+        "id": "our-approach",
+        "icon": "●",
+        "title": "Our Approach",
+        "body": "Describes attooh!s commitment to making ",
+        "articles": []
+      },
+      {
+        "id": "our-values",
+        "icon": "●",
+        "title": "Our Values",
+        "body": "Outlines attooh!s ethical, value-driven ",
+        "articles": []
+      },
+      {
+        "id": "our-process",
+        "icon": "●",
+        "title": "Our Process",
+        "body": "Three-step client journey: share details",
+        "articles": []
+      },
+      {
+        "id": "management-team",
+        "icon": "●",
+        "title": "Management Team",
+        "body": "Profiles of the leadership team includin",
+        "articles": []
+      },
+      {
+        "id": "financial-plan-faq",
+        "icon": "●",
+        "title": "Financial Plan FAQ",
+        "body": "Answers common client questions about wh",
+        "articles": []
+      }
+    ]
+  },
+  "our-story": {
+    "title": "attooh! Our Story",
+    "color": "#9cd31e",
+    "items": [
+      {
+        "id": "brand-origin",
+        "icon": "●",
+        "title": "Brand Origin",
+        "body": "Recounts how the name attooh! came from ",
+        "articles": []
+      },
+      {
+        "id": "abundance-mindset",
+        "icon": "●",
+        "title": "Abundance Mindset",
+        "body": "Explains attooh!s philosophy of reframin",
+        "articles": []
+      },
+      {
+        "id": "core-focus",
+        "icon": "●",
+        "title": "Core Focus",
+        "body": "Describes attooh!s dedication to serving",
+        "articles": []
+      },
+      {
+        "id": "personal-finance-overview",
+        "icon": "●",
+        "title": "Personal Finance Overview",
+        "body": "Introduces personal finance as the art o",
+        "articles": []
+      },
+      {
+        "id": "business-insurance-overview",
+        "icon": "●",
+        "title": "Business Insurance Overview",
+        "body": "Explains why business insurance is criti",
+        "articles": []
+      },
+      {
+        "id": "employee-benefits-overview",
+        "icon": "●",
+        "title": "Employee Benefits Overview",
+        "body": "Outlines the importance of competitive e",
+        "articles": []
+      }
+    ]
+  },
+  "personal-insurance": {
+    "title": "Personal Family Insurance",
+    "color": "#9cd31e",
+    "items": [
+      {
+        "id": "individual-family-insurance",
+        "icon": "●",
+        "title": "Individual Family Insurance",
+        "body": "Flexible life cover with customisable di",
+        "articles": []
+      },
+      {
+        "id": "short-term-insurance",
+        "icon": "●",
+        "title": "Short-Term Insurance",
+        "body": "Comprehensive, flexible, and affordable ",
+        "articles": []
+      },
+      {
+        "id": "dread-disease",
+        "icon": "●",
+        "title": "Dread Disease Cover",
+        "body": "Protection against major illnesses such ",
+        "articles": []
+      },
+      {
+        "id": "disability-cover",
+        "icon": "●",
+        "title": "Disability Cover",
+        "body": "Capital lump sum paid out upon permanent",
+        "articles": []
+      },
+      {
+        "id": "income-protection",
+        "icon": "●",
+        "title": "Income Protection",
+        "body": "Replaces a portion of earnings if unable",
+        "articles": []
+      },
+      {
+        "id": "gap-cover",
+        "icon": "●",
+        "title": "Gap Cover",
+        "body": "Short-term policy covering the shortfall",
+        "articles": []
+      }
+    ]
+  },
+  "health-wealth": {
+    "title": "Health Wealth Solutions",
+    "color": "#9cd31e",
+    "items": [
+      {
+        "id": "health-cover",
+        "icon": "●",
+        "title": "Health Cover",
+        "body": "Monthly premium medical cover ensuring c",
+        "articles": []
+      },
+      {
+        "id": "investments",
+        "icon": "●",
+        "title": "Investments",
+        "body": "Strategies to grow, protect, and transfe",
+        "articles": []
+      },
+      {
+        "id": "long-term-savings-offshore",
+        "icon": "●",
+        "title": "Long-Term Savings Offshore Investments",
+        "body": "Diversified investment allocation across",
+        "articles": []
+      },
+      {
+        "id": "retirement-planning",
+        "icon": "●",
+        "title": "Retirement Planning",
+        "body": "Creating and managing a financial plan f",
+        "articles": []
+      },
+      {
+        "id": "global-education",
+        "icon": "●",
+        "title": "Global Education Savings",
+        "body": "Financial safeguard ensuring a childs ed",
+        "articles": []
+      }
+    ]
+  },
+  "business-assurance": {
+    "title": "Business Assurance",
+    "color": "#3a6000",
+    "items": [
+      {
+        "id": "buy-sell-agreements",
+        "icon": "●",
+        "title": "Buy-and-Sell Agreements",
+        "body": "Ensures business continuity by funding s",
+        "articles": []
+      },
+      {
+        "id": "keyman-insurance",
+        "icon": "●",
+        "title": "Keyman Insurance",
+        "body": "Compensates for financial losses from th",
+        "articles": []
+      },
+      {
+        "id": "contingent-liability",
+        "icon": "●",
+        "title": "Contingent Liability Policy",
+        "body": "Protects business liquidity and personal",
+        "articles": []
+      },
+      {
+        "id": "business-risk-insurance",
+        "icon": "●",
+        "title": "Business Risk Insurance",
+        "body": "Broad coverage against business-specific",
+        "articles": []
+      },
+      {
+        "id": "cyber-liability",
+        "icon": "●",
+        "title": "Cyber Liability Insurance",
+        "body": "Covers financial losses arising from cyb",
+        "articles": []
+      },
+      {
+        "id": "property-insurance",
+        "icon": "●",
+        "title": "Property Insurance",
+        "body": "Protects business property assets agains",
+        "articles": []
+      }
+    ]
+  },
+  "employee-benefits": {
+    "title": "Employee Benefits",
+    "color": "#3a6000",
+    "items": [
+      {
+        "id": "corporate-benefits-consulting",
+        "icon": "●",
+        "title": "Corporate Benefits Consulting",
+        "body": "attooh! assists companies in designing b",
+        "articles": []
+      },
+      {
+        "id": "financial-wellness-employees",
+        "icon": "●",
+        "title": "Financial Wellness for Employees",
+        "body": "Education and support programmes helping",
+        "articles": []
+      },
+      {
+        "id": "comparative-benefits-quote",
+        "icon": "●",
+        "title": "Comparative Benefits Quote",
+        "body": "Non-obligatory quote service to help emp",
+        "articles": []
+      }
+    ]
+  },
+  "wills-estates": {
+    "title": "Wills Estate Planning",
+    "color": "#3a6000",
+    "items": [
+      {
+        "id": "complimentary-will",
+        "icon": "●",
+        "title": "Complimentary Will",
+        "body": "Free professionally drafted, collected, ",
+        "articles": []
+      },
+      {
+        "id": "estate-administration",
+        "icon": "●",
+        "title": "Estate Administration",
+        "body": "Full in-house estate administration serv",
+        "articles": []
+      },
+      {
+        "id": "cost-of-dying-planning",
+        "icon": "●",
+        "title": "Cost of Dying Planning",
+        "body": "Consultation and calculation of executor",
+        "articles": []
+      },
+      {
+        "id": "legacy-protection-plan",
+        "icon": "●",
+        "title": "Legacy Protection Plan",
+        "body": "Insurance-backed solution underwritten b",
+        "articles": []
+      },
+      {
+        "id": "testamentary-trusts",
+        "icon": "●",
+        "title": "Testamentary Trusts",
+        "body": "Creation of trusts for minor children, w",
+        "articles": []
+      },
+      {
+        "id": "five-consequences-no-will",
+        "icon": "●",
+        "title": "5 Consequences of No Will",
+        "body": "Educational content outlining the legal ",
+        "articles": []
+      }
+    ]
+  },
+  "fiduciary-services": {
+    "title": "Fiduciary Services",
+    "color": "#3a6000",
+    "items": [
+      {
+        "id": "will-drafting",
+        "icon": "●",
+        "title": "Will Drafting",
+        "body": "Legally prepared will documents ensuring",
+        "articles": []
+      },
+      {
+        "id": "estate-planning-advice",
+        "icon": "●",
+        "title": "Estate Planning Advice",
+        "body": "Guidance on structuring an estate to min",
+        "articles": []
+      }
+    ]
+  },
+  "blog-insights": {
+    "title": "Blog Financial Insights",
+    "color": "#3a6000",
+    "items": [
+      {
+        "id": "money-mindset-matters",
+        "icon": "●",
+        "title": "Your Money Mindset Matters!",
+        "body": "Explores the millionaire mindset, abunda",
+        "articles": [
+          {
+            "title": "Learn more",
+            "url": "https://attooh.co.za/blog/b/money-mindset-matters"
+          }
+        ]
+      },
+      {
+        "id": "secure-your-legacy",
+        "icon": "●",
+        "title": "Protect Your Legacy: Secure Your Familys",
+        "body": "Details the immediate and long-term fina",
+        "articles": [
+          {
+            "title": "Learn more",
+            "url": "https://attooh.co.za/blog/b/secure-your-legacy"
+          }
+        ]
+      },
+      {
+        "id": "financial-management-recipe",
+        "icon": "●",
+        "title": "Financial Management, Recipe for Success",
+        "body": "Uses a baking metaphor to explain goal-s",
+        "articles": [
+          {
+            "title": "Learn more",
+            "url": "https://attooh.co.za/blog/b/financial-management-recipe-for-success"
+          }
+        ]
+      },
+      {
+        "id": "why-disability-cover",
+        "icon": "●",
+        "title": "Why Consider Disability Cover?",
+        "body": "Compares capital disability cover and in",
+        "articles": [
+          {
+            "title": "Learn more",
+            "url": "https://attooh.co.za/blog/b/why-consider-disability-insurance"
+          }
+        ]
+      },
+      {
+        "id": "worth-of-financial-advisors",
+        "icon": "●",
+        "title": "The Underrated Worth of Financial Adviso",
+        "body": "Outlines five ways financial advisors ad",
+        "articles": [
+          {
+            "title": "Learn more",
+            "url": "https://attooh.co.za/blog/b/the-underrated-worth-of-financial-advisors"
+          }
+        ]
+      },
+      {
+        "id": "children-and-finance",
+        "icon": "●",
+        "title": "Children and Finance",
+        "body": "A staged guide to introducing money mana",
+        "articles": [
+          {
+            "title": "Learn more",
+            "url": "https://attooh.co.za/blog/b/children-and-finance"
+          }
+        ]
+      },
+      {
+        "id": "teens-and-budgeting",
+        "icon": "●",
+        "title": "Teaching Your Teenager the 50/30/20 Budg",
+        "body": "Applies the 50/30/20 budgeting framework",
+        "articles": [
+          {
+            "title": "Learn more",
+            "url": "https://attooh.co.za/blog/b/teens-and-budgeting"
+          }
+        ]
+      }
+    ]
+  }
+};
+
+// ── BUILD NAV BAR ─────────────────────────────────────────────────────────────
+
+const navBar = document.getElementById("nav-bar");
+
+const pathDefs = [
+  {
+    "key": "new-client-onboarding",
+    "label": "New Client Discovery to Advisor Engageme"
+  },
+  {
+    "key": "estate-planning-path",
+    "label": "Legacy Estate Planning Journey"
+  },
+  {
+    "key": "services-exploration",
+    "label": "Services Discovery to Specialist Areas"
+  },
+  {
+    "key": "blog-to-services",
+    "label": "Educational Content to Service Conversio"
+  },
+  {
+    "key": "our-story-to-services",
+    "label": "Brand Story to Financial Solutions"
+  }
+];
+pathDefs.forEach(({ key, label }) => {
+  const p = document.createElement("div");
+  p.className = "nav-pill path"; p.textContent = label; p.dataset.path = key;
+  navBar.appendChild(p);
+});
+
+const bottomScroll = document.getElementById("bottom-scroll");
+const allPill = document.createElement("div");
+allPill.className = "nav-pill all active"; allPill.textContent = "All"; allPill.dataset.id = "all";
+bottomScroll.appendChild(allPill);
+
+strandA.forEach(hub => {
+  const p = document.createElement("div");
+  p.className = "nav-pill a"; p.textContent = hub.label; p.dataset.id = hub.id;
+  bottomScroll.appendChild(p);
+});
+const divEl = document.createElement("div"); divEl.className = "nav-divider";
+bottomScroll.appendChild(divEl);
+strandB.forEach(hub => {
+  const p = document.createElement("div");
+  p.className = "nav-pill b"; p.textContent = hub.label; p.dataset.id = hub.id;
+  bottomScroll.appendChild(p);
+});
+
+// ── SCENE ─────────────────────────────────────────────────────────────────────
+
+const container = document.getElementById("canvas-container");
+const W = () => container.clientWidth;
+const H = () => container.clientHeight;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffffff);
+scene.fog = new THREE.FogExp2(0xffffff, 0.005);
+
+const camera = new THREE.PerspectiveCamera(50, W() / H(), 0.1, 120);
+camera.position.set(0, 0, 32);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(W(), H());
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+container.appendChild(renderer.domElement);
+
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(W(), H());
+labelRenderer.domElement.style.position = "absolute";
+labelRenderer.domElement.style.top = "0"; labelRenderer.domElement.style.left = "0";
+labelRenderer.domElement.style.pointerEvents = "none";
+labelRenderer.domElement.style.overflow = "hidden";
+container.appendChild(labelRenderer.domElement);
+
+// ── LIGHTING ──────────────────────────────────────────────────────────────────
+
+scene.add(new THREE.AmbientLight(0xffffff, 1.1));
+const limeLight = new THREE.PointLight(0x9cd31e, 2.0, 50);
+limeLight.position.set(8, 10, 12); scene.add(limeLight);
+const darkLight = new THREE.PointLight(0x3a6000, 1.2, 50);
+darkLight.position.set(-8, -10, 8); scene.add(darkLight);
+const keyLight = new THREE.DirectionalLight(0xffffff, 0.7);
+keyLight.position.set(5, 5, 8); scene.add(keyLight);
+
+// ── SPHERE GEOMETRY ───────────────────────────────────────────────────────────
+
+const SPHERE_R = 7, HUB_R = 0.50, CHILD_R = 0.20;
+const pivot = new THREE.Group(); scene.add(pivot);
+let rotX = -0.10, rotY = 0;
+
+pivot.add(new THREE.LineSegments(
+  new THREE.WireframeGeometry(new THREE.SphereGeometry(SPHERE_R, 20, 16)),
+  new THREE.LineBasicMaterial({ color: 0xdddddd, transparent: true, opacity: 0.10 })
+));
+const eqMesh = new THREE.Mesh(
+  new THREE.TorusGeometry(SPHERE_R * 0.995, 0.055, 8, 100),
+  new THREE.MeshBasicMaterial({ color: 0xcccccc, transparent: true, opacity: 0.40 })
+);
+eqMesh.rotation.x = Math.PI / 2; pivot.add(eqMesh);
+
+function hubAngles(hubIdx, isA) {
+  const sign = isA ? 1 : -1, ring = hubIdx % 2, ri = Math.floor(hubIdx / 2);
+  if (ring === 0) return { phi: ri * Math.PI / 2,               lat: sign * 1.05 };
+  else            return { phi: ri * Math.PI / 2 + Math.PI / 4, lat: sign * 0.52 };
+}
+function sphPos(phi, lat, r) {
+  r = r !== undefined ? r : SPHERE_R;
+  return new THREE.Vector3(r * Math.cos(lat) * Math.cos(phi), r * Math.sin(lat), r * Math.cos(lat) * Math.sin(phi));
+}
+const CHILD_OFFSETS = [{ dphi:-0.30, dlat:0.26 }, { dphi:0.30, dlat:0.26 }, { dphi:0.00, dlat:-0.28 }];
+
+// ── MATERIALS ─────────────────────────────────────────────────────────────────
+
+function hubMat(isA) {
+  return new THREE.MeshStandardMaterial({
+    color: isA ? 0x7aaa10 : 0x3a6000, emissive: isA ? 0x3a5508 : 0x1a2e00,
+    emissiveIntensity: 0.25, roughness: 0.25, metalness: 0.45, transparent: true, opacity: 1.0,
+  });
+}
+function childMat(isA) {
+  return new THREE.MeshStandardMaterial({
+    color: isA ? 0x9cd31e : 0x507a00, emissive: isA ? 0x3a5508 : 0x1a2e00,
+    emissiveIntensity: 0.1, roughness: 0.4, metalness: 0.3, transparent: true, opacity: 1.0,
+  });
+}
+function glowMat(isA, isHub) {
+  return new THREE.MeshBasicMaterial({
+    color: isA ? 0x9cd31e : 0x3a6000, transparent: true,
+    opacity: isHub ? 0.09 : 0.05, side: THREE.BackSide,
+  });
+}
+const hoverMat = new THREE.MeshStandardMaterial({
+  color: 0xc8f040, emissive: 0x9cd31e, emissiveIntensity: 0.7,
+  roughness: 0.15, metalness: 0.5, transparent: true, opacity: 1.0,
+});
+
+// ── BUILD STRANDS ─────────────────────────────────────────────────────────────
+
+const allClickable = [], hubGroups = {};
+
+function buildSphereStrand(strandData, isA) {
+  const hubGeo = new THREE.SphereGeometry(HUB_R, 24, 24);
+  const childGeo = new THREE.SphereGeometry(CHILD_R, 16, 16);
+  const hubGlow  = new THREE.SphereGeometry(HUB_R * 1.55, 16, 16);
+  const cGlowGeo = new THREE.SphereGeometry(CHILD_R * 1.80, 12, 12);
+
+  strandData.forEach((hub, hubIdx) => {
+    const { phi, lat } = hubAngles(hubIdx, isA);
+    const hPos = sphPos(phi, lat), hOut = hPos.clone().normalize();
+
+    const hg = new THREE.Mesh(hubGlow, glowMat(isA, true));
+    hg.position.copy(hPos); pivot.add(hg);
+
+    const hMat = hubMat(isA);
+    const hMesh = new THREE.Mesh(hubGeo, hMat);
+    hMesh.position.copy(hPos);
+    hMesh.userData = { isHub: true, data: hub, hubId: hub.id, originalMat: hMat, nodePhi: phi };
+    pivot.add(hMesh); allClickable.push({ mesh: hMesh });
+
+    const hDiv = document.createElement("div");
+    hDiv.className = "node-label " + (isA ? "hub-a" : "hub-b");
+    hDiv.textContent = hub.label;
+    const hLabel = new CSS2DObject(hDiv);
+    hLabel.position.copy(hOut.multiplyScalar(0.72));
+    hMesh.add(hLabel);
+    hMesh.userData.labelObj = hLabel;
+    hMesh.userData.labelEl  = hDiv;
+
+    hubGroups[hub.id] = { hubMesh: hMesh, phi, lat, isA };
+
+    hub.children.forEach((child, ci) => {
+      const off = CHILD_OFFSETS[ci % CHILD_OFFSETS.length];
+      const cPhi = phi + off.dphi;
+      const cPos = sphPos(cPhi, lat + off.dlat);
+      const cg = new THREE.Mesh(cGlowGeo, glowMat(isA, false));
+      cg.position.copy(cPos); pivot.add(cg);
+      const cMat = childMat(isA);
+      const cMesh = new THREE.Mesh(childGeo, cMat);
+      cMesh.position.copy(cPos);
+      cMesh.userData = { isHub: false, data: child, hubId: hub.id, originalMat: cMat, nodePhi: cPhi };
+      pivot.add(cMesh); allClickable.push({ mesh: cMesh });
+      const cDiv = document.createElement("div");
+      cDiv.className = "node-label " + (isA ? "child-a" : "child-b");
+      cDiv.textContent = child.label;
+      const cLabel = new CSS2DObject(cDiv);
+      cLabel.position.copy(cPos.clone().normalize().multiplyScalar(0.45));
+      cMesh.add(cLabel);
+      cMesh.userData.labelObj = cLabel;
+      cMesh.userData.labelEl  = cDiv;
+      pivot.add(new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints([hPos.clone(), cPos.clone()]),
+        new THREE.LineBasicMaterial({ color: isA ? 0x9cd31e : 0x3a6000, transparent: true, opacity: 0.30 })
+      ));
+    });
+  });
+}
+
+buildSphereStrand(strandA, true);
+buildSphereStrand(strandB, false);
+
+// ── CENTER NODE ───────────────────────────────────────────────────────────────
+
+const centerGeo = new THREE.SphereGeometry(1.10, 32, 32);
+const centerMat = new THREE.MeshStandardMaterial({
+  color: 0x9cd31e, emissive: 0x9cd31e, emissiveIntensity: 0.20,
+  roughness: 0.3, metalness: 0.2, transparent: true, opacity: 1.0,
+});
+const centerMesh = new THREE.Mesh(centerGeo, centerMat); pivot.add(centerMesh);
+
+// Glow rings
+[0.85, 1.3, 2.0].forEach((r, i) => {
+  pivot.add(new THREE.Mesh(
+    new THREE.SphereGeometry(r * 1.0, 20, 20),
+    new THREE.MeshBasicMaterial({ color: 0x9cd31e, transparent: true, opacity: [0.10, 0.05, 0.02][i], side: THREE.BackSide })
+  ));
+});
+
+const cDiv = document.createElement("div");
+cDiv.className = "node-label hub-a";
+cDiv.style.fontSize = "13px"; cDiv.style.padding = "4px 14px";
+cDiv.style.background = "linear-gradient(135deg, rgba(156,211,30,0.15), rgba(58,96,0,0.12))";
+cDiv.style.border = "1.5px solid rgba(156,211,30,0.55)";
+cDiv.textContent = "attooh!";
+cDiv.addEventListener("click", e => { e.stopPropagation(); activePath ? exitPath() : selectHub("all"); });
+const cLabel = new CSS2DObject(cDiv);
+cLabel.position.set(0, 0.85, 0); pivot.add(cLabel);
+
+Object.values(hubGroups).forEach(({ hubMesh, isA }) => {
+  pivot.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), hubMesh.position.clone()]),
+    new THREE.LineBasicMaterial({ color: isA ? 0x9cd31e : 0x3a6000, transparent: true, opacity: 0.25 })
+  ));
+});
+
+rungHubs.forEach(([ai, bi]) => {
+  const { phi: phiA, lat: latA } = hubAngles(ai, true);
+  const { phi: phiB, lat: latB } = hubAngles(bi, false);
+  pivot.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([sphPos(phiA, latA), sphPos(phiB, latB)]),
+    new THREE.LineBasicMaterial({ color: 0xbbbbbb, transparent: true, opacity: 0.20 })
+  ));
+});
+
+// ── PATH DEFINITIONS ──────────────────────────────────────────────────────────
+
+const PATHS = {
+  "new-client-onboarding": {
+    "label": "New Client Discovery to Advisor Engageme",
+    "color": "#9cd31e",
+    "hubs": [
+      "home-overview",
+      "our-story",
+      "personal-insurance"
+    ]
+  },
+  "estate-planning-path": {
+    "label": "Legacy Estate Planning Journey",
+    "color": "#3a6000",
+    "hubs": [
+      "wills-estates",
+      "blog-insights",
+      "home-overview"
+    ]
+  },
+  "services-exploration": {
+    "label": "Services Discovery to Specialist Areas",
+    "color": "#c8a000",
+    "hubs": [
+      "personal-insurance",
+      "business-assurance",
+      "employee-benefits",
+      "wills-estates"
+    ]
+  },
+  "blog-to-services": {
+    "label": "Educational Content to Service Conversio",
+    "color": "#5a8fd8",
+    "hubs": [
+      "blog-insights",
+      "personal-insurance",
+      "wills-estates"
+    ]
+  },
+  "our-story-to-services": {
+    "label": "Brand Story to Financial Solutions",
+    "color": "#e07040",
+    "hubs": [
+      "our-story",
+      "personal-insurance",
+      "wills-estates"
+    ]
+  }
+};
+
+// ── SELECTION STATE ───────────────────────────────────────────────────────────
+
+let activePath = null, pathStep = 0;
+let selectedHubIds = new Set();
+let targetRotX = null, targetRotY = null;
+let pathLines = [];
+
+function rotateTo(hubId, tiltFactor = 0.75) {
+  if (!hubGroups[hubId]) return;
+  const { phi, lat } = hubGroups[hubId];
+  const rawY = Math.PI / 2 - phi;
+  let diffY = ((rawY - rotY) % (2 * Math.PI) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
+  targetRotY = rotY + diffY; targetRotX = -lat * tiltFactor;
+}
+
+function clearPathLines() { pathLines.forEach(l => pivot.remove(l)); pathLines = []; }
+
+function drawPathLines(hubs, color) {
+  clearPathLines();
+  const c = new THREE.Color(color);
+  for (let i = 0; i < hubs.length - 1; i++) {
+    const g1 = hubGroups[hubs[i]], g2 = hubGroups[hubs[i + 1]];
+    if (!g1 || !g2) continue;
+    const line = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([g1.hubMesh.position.clone(), g2.hubMesh.position.clone()]),
+      new THREE.LineBasicMaterial({ color: c, transparent: true, opacity: 0.70, linewidth: 2 })
+    );
+    pivot.add(line); pathLines.push(line);
+  }
+}
+
+function updatePathGuide() {
+  if (!activePath) return;
+  const p = PATHS[activePath];
+  const isLast = pathStep === p.hubs.length - 1;
+  const hubData = hubById[p.hubs[pathStep]];
+  const stepText = `Step ${pathStep + 1} of ${p.hubs.length}: ${hubData ? hubData.label : p.hubs[pathStep]}`;
+
+  document.getElementById("path-guide").style.setProperty("--path-color", p.color);
+  document.getElementById("pg-label").textContent = p.label;
+  document.getElementById("pg-step").textContent = stepText;
+  const dots = document.getElementById("pg-dots"); dots.innerHTML = "";
+  p.hubs.forEach((_, i) => {
+    const d = document.createElement("div");
+    d.className = "pg-dot" + (i < pathStep ? " done" : i === pathStep ? " active" : "");
+    dots.appendChild(d);
+  });
+  document.getElementById("pg-back").style.display = pathStep === 0 ? "none" : "";
+  document.getElementById("pg-next").textContent = isLast ? "Finish ✓" : "Next →";
+
+  document.getElementById("cp-path-bar").style.setProperty("--pb-color", p.color);
+  document.getElementById("cpb-label").textContent = p.label;
+  document.getElementById("cpb-step").textContent = stepText;
+  document.getElementById("cpb-back").style.display = pathStep === 0 ? "none" : "";
+  document.getElementById("cpb-next").textContent = isLast ? "Finish ✓" : "Next →";
+  document.getElementById("cpb-next").style.background = isLast ? "#27ae60" : p.color;
+}
+
+function applyPathStep() {
+  if (!activePath) return;
+  const currentHub = PATHS[activePath].hubs[pathStep];
+  selectedHubIds = new Set([currentHub]);
+  autoRotate = false;
+  rotateTo(currentHub, 0.70);
+  updatePathGuide();
+  renderContentPanel(currentHub);
+  window.SphereAnalytics?.track("path_step_reached", { path_key: activePath, step: pathStep, hub_id: currentHub });
+}
+
+function activatePath(pathKey) {
+  activePath = pathKey; pathStep = 0;
+  stopPillSpotlight();
+  const p = PATHS[pathKey];
+  drawPathLines(p.hubs, p.color);
+  document.getElementById("path-guide").classList.add("visible");
+  document.getElementById("controls").style.display = "none";
+  document.body.classList.add("path-active");
+  applyPathStep();
+  setActivePathPill(pathKey);
+  allPill.classList.remove("active");
+  window.SphereAnalytics?.track("path_started", { path_key: pathKey, path_label: p.label });
+}
+
+function exitPath() {
+  const completedPath = activePath;
+  const completedStep = pathStep;
+  activePath = null; pathStep = 0;
+  selectedHubIds.clear(); hideContentPanel(); clearPathLines();
+  targetRotX = null; targetRotY = null; autoRotate = true;
+  document.getElementById("path-guide").classList.remove("visible");
+  document.getElementById("controls").style.display = "";
+  document.body.classList.remove("path-active");
+  setActivePathPill(null); setActiveNav("all");
+  window.SphereAnalytics?.track("path_exited", { path_key: completedPath, steps_completed: completedStep });
+  if (completedPath && PATHS[completedPath] && completedStep === PATHS[completedPath].hubs.length - 1) {
+    showEmailCapture();
+  }
+  pillSpotIndex = 0; startPillSpotlight();
+}
+
+document.getElementById("pg-exit").addEventListener("click", exitPath);
+document.getElementById("cpb-close").addEventListener("click", exitPath);
+document.getElementById("pg-back").addEventListener("click", () => { if (pathStep > 0) { pathStep--; applyPathStep(); } });
+document.getElementById("pg-next").addEventListener("click", () => {
+  if (!activePath) return;
+  if (pathStep < PATHS[activePath].hubs.length - 1) { pathStep++; applyPathStep(); } else exitPath();
+});
+document.getElementById("cpb-back").addEventListener("click", () => { if (pathStep > 0) { pathStep--; applyPathStep(); } });
+document.getElementById("cpb-next").addEventListener("click", () => {
+  if (!activePath) return;
+  if (pathStep < PATHS[activePath].hubs.length - 1) { pathStep++; applyPathStep(); } else exitPath();
+});
+
+function selectHub(hubId) {
+  if (activePath) return;
+  stopPillSpotlight();
+  if (hubId === "all" || (selectedHubIds.size === 1 && selectedHubIds.has(hubId))) {
+    selectedHubIds.clear(); targetRotX = null; targetRotY = null;
+    autoRotate = true; setActiveNav("all"); hideContentPanel(); return;
+  }
+  selectedHubIds = new Set([hubId]); autoRotate = false;
+  rotateTo(hubId); setActiveNav(hubId); renderContentPanel(hubId);
+  window.SphereAnalytics?.track("hub_clicked", { hub_id: hubId, hub_label: hubById[hubId]?.label || hubId });
+}
+
+function setActiveNav(hubId) {
+  document.querySelectorAll(".nav-pill:not(.path)").forEach(p => p.classList.toggle("active", p.dataset.id === hubId));
+  if (!hubId || hubId === "all") allPill.classList.add("active");
+}
+function setActivePathPill(pathKey) {
+  document.querySelectorAll(".nav-pill.path").forEach(p => p.classList.toggle("active", p.dataset.path === pathKey));
+}
+
+// ── PANEL RESIZE ─────────────────────────────────────────────────────────────
+
+const contentPanel = document.getElementById("content-panel");
+const resizeHandle = document.getElementById("cp-resize-handle");
+let isResizing = false;
+resizeHandle.addEventListener("mousedown", e => { isResizing = true; resizeHandle.classList.add("dragging"); e.preventDefault(); });
+window.addEventListener("mousemove", e => {
+  if (!isResizing) return;
+  contentPanel.style.width = Math.min(Math.max(window.innerWidth - e.clientX, 280), window.innerWidth * 0.85) + "px";
+});
+window.addEventListener("mouseup", () => { if (isResizing) { isResizing = false; resizeHandle.classList.remove("dragging"); } });
+document.getElementById("change-path").addEventListener("click", () => { exitPath(); });
+
+// ── NAV PILL SPOTLIGHT CAROUSEL ───────────────────────────────────────────────
+
+let pillSpotTimer = null, pillSpotIndex = 0;
+function startPillSpotlight() {
+  const pills = Array.from(document.querySelectorAll(".nav-pill.path"));
+  if (!pills.length || activePath) return;
+  pills.forEach(p => p.classList.remove("spotlight"));
+  pills[pillSpotIndex % pills.length].classList.add("spotlight");
+  pills[pillSpotIndex % pills.length].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  pillSpotTimer = setInterval(() => {
+    if (activePath) return;
+    pills.forEach(p => p.classList.remove("spotlight"));
+    pillSpotIndex = (pillSpotIndex + 1) % pills.length;
+    pills[pillSpotIndex].classList.add("spotlight");
+    pills[pillSpotIndex].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, 3500);
+}
+function stopPillSpotlight() {
+  clearInterval(pillSpotTimer); pillSpotTimer = null;
+  document.querySelectorAll(".nav-pill.path").forEach(p => p.classList.remove("spotlight"));
+}
+startPillSpotlight();
+
+navBar.addEventListener("click", e => {
+  if (navDragged) return;
+  const pill = e.target.closest(".nav-pill.path");
+  if (!pill) return;
+  if (activePath === pill.dataset.path) { exitPath(); return; }
+  activatePath(pill.dataset.path);
+});
+
+let bottomDragging = false, bottomDragged = false, bottomStartX = 0, bottomScrollStart = 0;
+bottomScroll.addEventListener("mousedown", e => { bottomDragging = true; bottomDragged = false; bottomStartX = e.pageX; bottomScrollStart = bottomScroll.scrollLeft; e.preventDefault(); });
+window.addEventListener("mousemove", e => { if (!bottomDragging) return; const dx = e.pageX - bottomStartX; if (Math.abs(dx) > 4) bottomDragged = true; bottomScroll.scrollLeft = bottomScrollStart - dx; });
+window.addEventListener("mouseup", () => { bottomDragging = false; });
+bottomScroll.addEventListener("wheel", e => { e.preventDefault(); bottomScroll.scrollLeft += e.deltaY + e.deltaX; }, { passive: false });
+bottomScroll.addEventListener("click", e => {
+  if (bottomDragged) return;
+  const pill = e.target.closest(".nav-pill");
+  if (!pill) return; stopPillSpotlight(); selectHub(pill.dataset.id);
+});
+
+let navDragging = false, navDragged = false, navStartX = 0, navScrollStart = 0;
+navBar.addEventListener("mousedown", e => { navDragging = true; navDragged = false; navStartX = e.pageX; navScrollStart = navBar.scrollLeft; e.preventDefault(); });
+window.addEventListener("mousemove", e => { if (!navDragging) return; const dx = e.pageX - navStartX; if (Math.abs(dx) > 4) navDragged = true; navBar.scrollLeft = navScrollStart - dx; });
+window.addEventListener("mouseup", () => { navDragging = false; });
+navBar.addEventListener("wheel", e => { e.preventDefault(); navBar.scrollLeft += e.deltaY + e.deltaX; }, { passive: false });
+
+// ── INTERACTION ───────────────────────────────────────────────────────────────
+
+const raycaster = new THREE.Raycaster();
+const mouse2    = new THREE.Vector2(-9999, -9999);
+let hoveredMesh = null, autoRotate = true;
+let mouseIsDown = false, isDragging = false;
+let dragStartX = 0, dragStartY = 0, lastMouseX = 0, lastMouseY = 0;
+const MIN_Z = 10, MAX_Z = 55;
+const DRAG_THRESHOLD = 8;
+
+const miniTip = document.getElementById("mini-tip");
+const mtLabel = document.getElementById("mt-label");
+const mtBody  = document.getElementById("mt-body");
+const mtAction= document.getElementById("mt-action");
+
+function getHit(clientX, clientY) {
+  const rect = container.getBoundingClientRect();
+  mouse2.x =  ((clientX - rect.left) / rect.width)  * 2 - 1;
+  mouse2.y = -((clientY - rect.top)  / rect.height) * 2 + 1;
+  raycaster.setFromCamera(mouse2, camera);
+  const hits = raycaster.intersectObjects(allClickable.map(c => c.mesh));
+  return hits.length > 0 ? hits[0].object : null;
+}
+
+document.getElementById("mt-close").addEventListener("click", () => miniTip.classList.remove("visible"));
+document.getElementById("mt-action").addEventListener("click", () => { const url = miniTip.dataset.url; if (url) window.open(url, "_blank"); });
+
+function showMiniTip(data, clientX, clientY) {
+  mtLabel.textContent  = data.label;
+  mtBody.textContent   = data.tip || "";
+  mtAction.textContent = data.url ? "Open →" : "";
+  miniTip.dataset.url  = data.url || "";
+  miniTip.classList.add("visible");
+  const cardW = 300, cardH = 160;
+  miniTip.style.left = Math.max(10, Math.min(clientX + 16, window.innerWidth  - cardW - 10)) + "px";
+  miniTip.style.top  = Math.max(62, Math.min(clientY - 20, window.innerHeight - cardH - 10)) + "px";
+}
+
+function handleClick(clientX, clientY) {
+  const rect = container.getBoundingClientRect();
+  mouse2.x =  ((clientX - rect.left) / rect.width)  * 2 - 1;
+  mouse2.y = -((clientY - rect.top)  / rect.height) * 2 + 1;
+  raycaster.setFromCamera(mouse2, camera);
+  if (raycaster.intersectObject(centerMesh).length > 0) { activePath ? exitPath() : selectHub("all"); return; }
+  const hit = getHit(clientX, clientY);
+  if (!hit) {
+    miniTip.classList.remove("visible");
+    if (selectedHubIds.size > 0 && !activePath) { selectedHubIds.clear(); targetRotX = null; targetRotY = null; autoRotate = true; hideContentPanel(); setActiveNav("all"); }
+    return;
+  }
+  const { data } = hit.userData;
+  if (hit.userData.isHub) { selectHub(data.id); return; }
+  showMiniTip(data, clientX, clientY);
+}
+
+container.addEventListener("mousedown", e => { mouseIsDown = true; isDragging = false; dragStartX = lastMouseX = e.clientX; dragStartY = lastMouseY = e.clientY; autoRotate = false; });
+window.addEventListener("mousemove", e => {
+  if (!mouseIsDown) {
+    const hit = getHit(e.clientX, e.clientY);
+    if (hit && hit !== hoveredMesh) { if (hoveredMesh) hoveredMesh.material = hoveredMesh.userData.originalMat; hoveredMesh = hit; hit.material = hoverMat; container.style.cursor = "pointer"; }
+    else if (!hit && hoveredMesh) { hoveredMesh.material = hoveredMesh.userData.originalMat; hoveredMesh = null; container.style.cursor = "grab"; }
+    return;
+  }
+  const dx = e.clientX - lastMouseX, dy = e.clientY - lastMouseY;
+  if (Math.abs(e.clientX - dragStartX) > DRAG_THRESHOLD || Math.abs(e.clientY - dragStartY) > DRAG_THRESHOLD) isDragging = true;
+  rotY += dx * 0.010; rotX += dy * 0.010;
+  rotX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, rotX));
+  lastMouseX = e.clientX; lastMouseY = e.clientY; targetRotX = null; targetRotY = null;
+  if (hoveredMesh) { hoveredMesh.material = hoveredMesh.userData.originalMat; hoveredMesh = null; }
+});
+window.addEventListener("mouseup", e => { if (!isDragging) handleClick(e.clientX, e.clientY); mouseIsDown = false; isDragging = false; if (selectedHubIds.size === 0 && !activePath) autoRotate = true; });
+
+window.addEventListener("wheel", e => {
+  if (e.target.closest("#content-panel")) return;
+  const d = e.deltaMode === 1 ? e.deltaY * 30 : e.deltaMode === 2 ? e.deltaY * 600 : e.deltaY;
+  camera.position.z = Math.max(MIN_Z, Math.min(MAX_Z, camera.position.z + d * 0.05));
+  e.preventDefault();
+}, { passive: false });
+
+// ── TOUCH HANDLING ────────────────────────────────────────────────────────────
+
+let isTouchDragging = false, lastTouchX = 0, lastTouchY = 0;
+let touchStartX = 0, touchStartY = 0, touchStartedInCanvas = false;
+let lastPinchDist = 0, isPinching = false;
+
+function pinchDist(e) {
+  const dx = e.touches[0].clientX - e.touches[1].clientX;
+  const dy = e.touches[0].clientY - e.touches[1].clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+function touchTargetInCanvas(touch) { return container.contains(touch.target); }
+
+window.addEventListener("touchstart", e => {
+  const t0 = e.touches[0];
+  touchStartedInCanvas = touchTargetInCanvas(t0);
+  if (!touchStartedInCanvas && e.touches.length < 2) return;
+  e.preventDefault();
+  if (e.touches.length >= 2) {
+    const anyInCanvas = Array.from(e.touches).some(t => touchTargetInCanvas(t));
+    if (!anyInCanvas) return;
+    isPinching = true; isTouchDragging = true; lastPinchDist = pinchDist(e); return;
+  }
+  isPinching = false; isTouchDragging = false;
+  lastTouchX = touchStartX = t0.clientX; lastTouchY = touchStartY = t0.clientY; autoRotate = false;
+}, { passive: false });
+
+window.addEventListener("touchmove", e => {
+  if (!touchStartedInCanvas && !isPinching) return;
+  e.preventDefault();
+  if (e.touches.length >= 2) {
+    isPinching = true; isTouchDragging = true;
+    const dist = pinchDist(e);
+    camera.position.z = Math.max(MIN_Z, Math.min(MAX_Z, camera.position.z + (lastPinchDist - dist) * 0.07));
+    lastPinchDist = dist; return;
+  }
+  if (e.touches.length === 1 && !isPinching) {
+    const t = e.touches[0];
+    if (Math.abs(t.clientX - touchStartX) > DRAG_THRESHOLD || Math.abs(t.clientY - touchStartY) > DRAG_THRESHOLD) isTouchDragging = true;
+    const dx = t.clientX - lastTouchX, dy = t.clientY - lastTouchY;
+    rotY += dx * 0.010; rotX += dy * 0.010;
+    rotX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, rotX));
+    lastTouchX = t.clientX; lastTouchY = t.clientY; targetRotX = null; targetRotY = null;
+  }
+}, { passive: false });
+
+window.addEventListener("touchend", e => {
+  if (e.touches.length < 2) isPinching = false;
+  if (e.touches.length === 0) {
+    const t = e.changedTouches[0];
+    if (!isTouchDragging && touchStartedInCanvas) handleClick(t.clientX, t.clientY);
+    isTouchDragging = false;
+    if (selectedHubIds.size === 0 && !activePath) autoRotate = true;
+  }
+}, { passive: true });
+
+// ── DEPTH FADE ────────────────────────────────────────────────────────────────
+
+const _wp = new THREE.Vector3();
+function updateDepth() {
+  const hasSel = selectedHubIds.size > 0;
+  cLabel.element.style.opacity = hasSel ? "0" : "1";
+  centerMesh.material.opacity = hasSel ? 0.08 : 1.0;
+  allClickable.forEach(({ mesh }) => {
+    if (mesh === hoveredMesh) return;
+    mesh.getWorldPosition(_wp);
+    const t = (_wp.z / SPHERE_R + 1) / 2;
+    if (hasSel) {
+      const show = (mesh.userData.isHub && hasSel && selectedHubIds.has(mesh.userData.data.id)) ||
+                   (!mesh.userData.isHub && selectedHubIds.has(mesh.userData.hubId));
+      mesh.material.opacity = show ? 1.0 : 0.05;
+      if (mesh.userData.labelObj) mesh.userData.labelObj.element.style.opacity = show ? "1" : "0.03";
+    } else {
+      mesh.material.opacity = 0.15 + t * 0.85;
+      if (mesh.userData.labelObj) mesh.userData.labelObj.element.style.opacity = Math.max(0.08, t * 0.9 + 0.08).toFixed(2);
+    }
+  });
+}
+
+function updateRotationAnimation() {
+  if (targetRotX === null || targetRotY === null) return;
+  const LERP = 0.06;
+  rotX += (targetRotX - rotX) * LERP; rotY += (targetRotY - rotY) * LERP;
+  if (Math.abs(rotX - targetRotX) < 0.001 && Math.abs(rotY - targetRotY) < 0.001) { rotX = targetRotX; rotY = targetRotY; targetRotX = null; targetRotY = null; }
+}
+
+function onResize() {
+  const w = W(), h = H(); if (!w || !h) return;
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+  renderer.setSize(w, h); labelRenderer.setSize(w, h);
+}
+window.addEventListener("resize", onResize); setTimeout(onResize, 0); window.addEventListener("load", onResize);
+
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  if (autoRotate) rotY -= 0.0025;
+  updateRotationAnimation();
+  pivot.rotation.y = rotY; pivot.rotation.x = rotX;
+  camera.lookAt(0, 0, 0);
+  limeLight.intensity = 1.8 + Math.sin(clock.getElapsedTime() * 1.2) * 0.2;
+  darkLight.intensity = 1.3 + Math.sin(clock.getElapsedTime() * 0.9 + 1) * 0.2;
+  updateDepth();
+  renderer.render(scene, camera);
+  labelRenderer.render(scene, camera);
+}
+animate();
+
+// ── CONTENT PANEL ─────────────────────────────────────────────────────────────
+
+let currentHubId = null;
+
+function renderContentPanel(hubId) {
+  const data = ILSA_CONTENT[hubId];
+  if (!data) { contentPanel.classList.remove("visible"); return; }
+  stopPillSpotlight();
+  document.body.classList.add("panel-open");
+  currentHubId = hubId;
+
+  document.getElementById("cp-step-badge").textContent = data.title;
+  document.getElementById("cp-title").textContent = data.title;
+  document.getElementById("cp-intro").textContent = hubById[hubId]?.tip || "";
+
+  const itemsEl = document.getElementById("cp-items"); itemsEl.innerHTML = "";
+
+  data.items.forEach(item => {
+    const card = document.createElement("div"); card.className = "cp-card";
+    const articlesHtml = item.articles && item.articles.length
+      ? `<div class="cp-articles"><div class="cp-articles-label">Links (${item.articles.length})</div><ul class="cp-article-list">${item.articles.map(a => `<li class="cp-article-item" data-url="${a.url}"><span class="cp-article-dot">›</span><span class="cp-article-title">${a.title}</span></li>`).join("")}</ul></div>` : "";
+    card.innerHTML = `
+      <div class="cp-card-header"><span class="cp-card-icon">${item.icon}</span><div class="cp-card-title">${item.title}</div></div>
+      <div class="cp-card-body">${item.body}</div>
+      ${articlesHtml}`;
+    card.querySelectorAll(".cp-article-item").forEach(li => {
+      li.addEventListener("click", () => {
+        const url = li.dataset.url;
+        if (url) {
+          window.SphereAnalytics?.track("article_clicked", { hub_id: hubId, article_url: url });
+          window.open(url, "_blank");
+        }
+      });
+    });
+    itemsEl.appendChild(card);
+  });
+
+  // Book a meeting CTA at bottom of panel
+  const ctaCard = document.createElement("div"); ctaCard.style.padding = "0 0 16px"; ctaCard.style.textAlign = "center";
+  const ctaBtn = document.createElement("button"); ctaBtn.className = "cp-cta-btn";
+  ctaBtn.textContent = "☕ Book a Free Consultation";
+  ctaBtn.addEventListener("click", () => window.open(CTA, "_blank"));
+  ctaCard.appendChild(ctaBtn); itemsEl.appendChild(ctaCard);
+
+  contentPanel.classList.add("visible");
+  window.SphereAnalytics?.track("panel_opened", { hub_id: hubId });
+}
+
+function hideContentPanel() {
+  contentPanel.classList.remove("visible");
+  document.body.classList.remove("panel-open");
+}
+
+document.getElementById("cp-admin-toggle").addEventListener("change", e => {
+  document.body.classList.toggle("admin-mode", e.target.checked);
+  document.getElementById("cp-heatmap-btn").style.display = e.target.checked ? "block" : "none";
+  if (!e.target.checked) clearHeatmap();
+  if (currentHubId) renderContentPanel(currentHubId);
+});
+
+// ── HEATMAP ──────────────────────────────────────────────────────────────────
+async function loadAndApplyHeatmap() {
+  const script = document.querySelector("script[data-sphere-id]");
+  const SPHERE_ID = script?.dataset?.sphereId || "attooh-sphere";
+  const API = script?.dataset?.apiUrl || "https://vrrrt-api-production.up.railway.app/analytics";
+  try {
+    const res = await fetch(`${API}/heatmap/${SPHERE_ID}?days=30`);
+    const { heatmap } = await res.json();
+    if (!heatmap || Object.keys(heatmap).length === 0) return;
+    const max = Math.max(...Object.values(heatmap));
+    allClickable.forEach(({ mesh }) => {
+      const el = mesh.userData.labelEl;
+      if (!el) return;
+      const hubId = mesh.userData.isHub ? mesh.userData.data.id : mesh.userData.hubId;
+      const count = heatmap[hubId] || 0;
+      const ratio = max > 0 ? count / max : 0;
+      el.classList.remove("heatmap-hot","heatmap-warm","heatmap-mild","heatmap-cool","heatmap-cold");
+      if (ratio > 0.75)      el.classList.add("heatmap-hot");
+      else if (ratio > 0.50) el.classList.add("heatmap-warm");
+      else if (ratio > 0.25) el.classList.add("heatmap-mild");
+      else if (ratio > 0.05) el.classList.add("heatmap-cool");
+      else                   el.classList.add("heatmap-cold");
+    });
+    document.body.classList.add("heatmap-mode");
+  } catch (err) {
+    console.warn("Heatmap load failed:", err);
+  }
+}
+
+function clearHeatmap() {
+  document.body.classList.remove("heatmap-mode");
+  allClickable.forEach(({ mesh }) => {
+    const el = mesh.userData.labelEl;
+    if (!el) return;
+    el.classList.remove("heatmap-hot","heatmap-warm","heatmap-mild","heatmap-cool","heatmap-cold");
+  });
+}
+
+let heatmapActive = false;
+document.getElementById("cp-heatmap-btn").addEventListener("click", () => {
+  heatmapActive = !heatmapActive;
+  if (heatmapActive) {
+    loadAndApplyHeatmap();
+    document.getElementById("cp-heatmap-btn").textContent = "❄️ Clear heatmap";
+  } else {
+    clearHeatmap();
+    document.getElementById("cp-heatmap-btn").textContent = "🔥 Heatmap";
+  }
+});
+
+// ── EMAIL CAPTURE ─────────────────────────────────────────────────────────────
+function showEmailCapture() {
+  const el = document.getElementById("email-capture");
+  if (!el) return;
+  setTimeout(() => { el.style.display = "block"; }, 2000);
+}
+
+document.getElementById("email-submit").addEventListener("click", async () => {
+  const email = document.getElementById("email-input").value.trim();
+  if (!email || !email.includes("@")) return;
+  await window.SphereAnalytics?.identify(email);
+  window.SphereAnalytics?.track("email_captured");
+  const el = document.getElementById("email-capture");
+  if (el) {
+    el.innerHTML = "<div style=\"color:#7CC68D;font-weight:800;font-size:13px;padding:10px;\">You'll hear from us soon!</div>";
+    setTimeout(() => { el.style.display = "none"; }, 2500);
+  }
+});
+
+document.getElementById("email-dismiss").addEventListener("click", () => {
+  const el = document.getElementById("email-capture");
+  if (el) el.style.display = "none";
+  window.SphereAnalytics?.track("email_capture_dismissed");
+});
+
+</script>
+<script src="analytics.js"
+  data-sphere-id="attooh-sphere"
+  data-api-url="https://vrrrt-api-production.up.railway.app/analytics"
+  defer></script>
+</body>
+</html>
